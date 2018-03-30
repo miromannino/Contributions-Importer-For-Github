@@ -23,5 +23,5 @@ class Generator:
     ''' delete num lines of code/text from content.
         content is a list of strings that represent the file '''
     def delete(self, content, num):
-        for i in range(num):
+        for i in range(min(num, len(content))):
             content.pop()
