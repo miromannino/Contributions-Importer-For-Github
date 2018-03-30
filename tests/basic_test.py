@@ -9,4 +9,5 @@ mock_repo_path = sys.argv[2]
 mock_repo = git.Repo.init(mock_repo_path)
 
 importer = Importer(repo, mock_repo)
+importer.set_commit_max_amount_changes(100)
 importer.import_repository()
