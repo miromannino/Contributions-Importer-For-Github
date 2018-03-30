@@ -1,2 +1,87 @@
-# contributions-importer-for-github
+# Contributions Importer for GitHub
+
 This tool helps users to import contributions to GitHub from private git repositories, or from public repositories that are not hosted in GitHub.
+
+## How it Works
+
+In its simplest case, this tools copies all commits from a source git repository to a mock git repository. Each copied commit will report the same commit date, but the original code is not copied, neither the commit message.
+
+<div style="text-align: center">
+<img src="https://github.com/miromannino/contributions-importer-for-github/blob/resources/fig.png" />
+</div>
+
+_Contributions Importer_ will create instead mock code in order to report which languages have been used in the source repository. 
+
+A mock git repository can be used more than one. In this way you can import multiple private repositories into only one mock repository, which will gather changes 
+
+## Reasons
+
+GitHub shows contributions statistics of its users. There are (several reasons)[https://github.com/isaacs/github/issues/627] why this feature could be debatable.
+
+Moreover, this mechanism only rewards developers that work on GitHub maintained repositories.
+
+Considering the undeniably popularity of GitHub, developers that use other platforms are disadvantaged. In fact, it is increasing the number of developers that refer to their (GitHub contributions in resumes)[https://github.com/resume/resume.github.com]. Similarly, recruiters (may use GitHub to find talents)[https://www.socialtalent.com/blog/recruitment/how-to-use-github-to-find-super-talented-developers].
+
+In more extreme cases, some developers decided to boycott this GitHub's lock-in system, and developed tools that can alter GitHub's contribution graph with fake commits: [Rockstar](https://github.com/avinassh/rockstar) and [Vanity text for GitHub](https://github.com/ihabunek/github-vanity) are good examples. 
+
+Instead, the aim of [Contributions Importer for GitHub](https://github.com/miromannino/contributions-importer-for-github) is to generate an overall realistic contributions overview.
+
+
+## How to Use 
+_Contributions Importer_ is for developers. No UI, nor simple command line tools. This tool can be used by writing a simple Python script:
+
+    import git
+    from git_contributions_importer import *
+    
+    repo = git.Repo("path/to/your/private/repo")
+    mock_repo = git.Repo("path/to/your/mock/repo")
+    
+    importer = Importer(repo, mock_repo)
+    importer.set_author('miro.mannino@gmail.com')
+      
+    importer.import_repository()
+
+If the mock repository folder could be an empty git repository as well as a repository that has already other commits. The latter case is useful for importing multiple repositories contributions into the mock repository. 
+
+
+## Protecting your private repository
+
+_Contributions Importer_ has few features to protect your  private code.
+
+### Masking the real commit time  
+
+    importer.set_commit_time_max_past(value)    
+    importer.set_commit_time_max_future(value)    
+
+Maximum amount in the past (or in the future) that the commit can be shifted for. The values are in seconds.
+
+### Maximum number of changes per commit  
+
+    importer.set_commit_max_amount_changes(max_amount)
+
+The maximum number of changes (line of code changed, added or removed) that a commit can have. Commits with many changes are disadvantaged in GitHub. Most likely these large commits could have been split in many smaller ones. GitHub users that know how contributions are calculated are prone to do several smaller commits instead, while in private repository this could not be necessary, especially in smaller teams. The default is -1, and it is to indicate no limits.
+
+### Maximum number of changes per file  
+
+    importer.set_max_changes_per_file(max_amount)
+
+Maximum number of changes per file. By default for each change (line of code changed, added or removed) a line of mock code is changed. This would limit the number of generated mock code for extreme cases where too many lines of codes are changes (e.g. SQL database dump). The default is 5.
+        
+### Maximum number of changes per file    
+
+    importer.set_changes_commits_max_time_backward(max_amount)
+
+If `set_commit_max_amount_changes()` has been used, a commit could be break in several ones. In that case this value decides how long these commits could go in the past. The idea is that a big commit is likely composed by several features that could have been committed in different commits. These changes would have been some time before the actual real commit. The time is in seconds, the default is 4 days.
+
+### Collapse multiple changes into one
+
+    importer.set_collapse_multiple_changes_to_one(true)
+
+It allows the importer to collapse several lines of changes to just one per commit, and one per type of file. This allows avoiding excessive growth of files size. The default is set to True.
+
+### Set Author
+
+    importer.set_author(email)
+
+Author to analyse. If not set, commits from any author will be imported. Author is given as email.
+
