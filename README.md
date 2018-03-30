@@ -85,3 +85,41 @@ It allows the importer to collapse several lines of changes to just one per comm
 
 Author to analyse. If not set, commits from any author will be imported. Author is given as email.
 
+
+## Contributing
+
+#### Code style
+Regarding code style like indentation and whitespace, **follow the conventions you see used in the source already.**
+
+### Submitting pull requests
+
+- Create a new branch, please don't work in your `master` branch directly.
+- Add failing tests for the change you want to make.
+- Fix stuff.
+- Ensure that the written tests don't fail anymore, as well as the other tests.
+- Update the documentation to reflect any changes.
+- Push to your fork and submit a pull request.
+
+## License
+
+MIT License
+
+Copyright (c) 2018 Miro Mannino
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
