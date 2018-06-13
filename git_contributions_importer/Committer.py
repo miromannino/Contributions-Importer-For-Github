@@ -16,11 +16,10 @@ class Committer:
     def check_readme(self):
         readme_path = os.path.dirname(__file__) + '/README.md'
         mockrepo_readme_path = self.mock_repo_path + '/README.md'
-        if not os.path.isfile(mockrepo_readme_path):
-            shutil.copyfile(readme_path, mockrepo_readme_path)
+        shutil.copyfile(readme_path, mockrepo_readme_path)
 
     ''' performs the commit. date is in seconds from epoch '''
-    def commit(self, date):
+    def commit(self, date, message):
         self.check_readme()
         for file in self.content.get_files():
             self.mock_repo.git.add(os.path.join(self.mock_repo_path, file))
@@ -28,6 +27,6 @@ class Committer:
         os.environ['GIT_AUTHOR_DATE'] = date_iso_format
         os.environ['GIT_COMMITTER_DATE'] = date_iso_format
         try:
-            self.mock_repo.git.commit('-m', 'message')
+            self.mock_repo.git.commit('-m', message, '--allow-empty')
         except git.exc.GitError as e:
             print('Error in commit: ' + str(e))

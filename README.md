@@ -10,9 +10,9 @@ In its simplest case, this tools copies all commits from a source git repository
 <img alt="idea" src="https://github.com/miromannino/contributions-importer-for-github/blob/resources/fig.png" />
 </p>
 
-_Contributions Importer_ will create instead mock code in order to report which languages have been used in the source repository. 
+_Contributions Importer_ will create instead mock code in order to report which languages have been used in the source repository.
 
-A mock git repository can be used more than one. In this way you can import multiple private repositories into only one mock repository, which will gather changes 
+You can also have multiple source git repository as well in order to report activities from several private git repositories.
 
 ## Reasons
 
@@ -37,12 +37,12 @@ _Contributions Importer_ is for developers. No UI, nor simple command line tools
     repo = git.Repo("path/to/your/private/repo")
     mock_repo = git.Repo("path/to/your/mock/repo")
     
-    importer = Importer(repo, mock_repo)
-    importer.set_author('miro.mannino@gmail.com')
+    importer = Importer([repo], mock_repo)
+    importer.set_author('email@domain.com')
       
     importer.import_repository()
 
-If the mock repository folder could be an empty git repository as well as a repository that has already other commits. The latter case is useful for importing multiple repositories contributions into the mock repository. 
+If the mock repository folder could be an empty git repository as well as a repository that has already other commits.
 
 
 ## Protecting your private repository
@@ -51,24 +51,17 @@ _Contributions Importer_ has few features to protect your  private code.
 
 ### Masking the real commit time  
 
-    importer.set_commit_time_max_past(value)    
-    importer.set_commit_time_max_future(value)    
+    importer.set_commit_time_max_past(value) 
 
-Maximum amount in the past (or in the future) that the commit can be shifted for. The values are in seconds.
-
-### Maximum number of changes per commit  
-
-    importer.set_commit_max_amount_changes(max_amount)
-
-The maximum number of changes (line of code changed, added or removed) that a commit can have. Commits with many changes are disadvantaged in GitHub. Most likely these large commits could have been split in many smaller ones. GitHub users that know how contributions are calculated are prone to do several smaller commits instead, while in private repository this could not be necessary, especially in smaller teams. The default is -1, and it is to indicate no limits.
+Maximum amount in the past that the commit can be shifted for. The values are in seconds.
 
 ### Maximum number of changes per file  
 
     importer.set_max_changes_per_file(max_amount)
 
-Maximum number of changes per file. By default for each change (line of code changed, added or removed) a line of mock code is changed. This would limit the number of generated mock code for extreme cases where too many lines of codes are changes (e.g. SQL database dump). The default is 5.
+Maximum number of changes per file. By default for each change (line of code changed, added or removed) a line of mock code is changed. Instead, `set_max_changes_per_file()` would limit the number of generated mock code for extreme cases where too many lines of codes are changes (e.g. SQL database dump). The default is 5.
         
-### Maximum number of changes per file    
+### Maximum time backward for splitted commits
 
     importer.set_changes_commits_max_time_backward(max_amount)
 
@@ -80,11 +73,17 @@ If `set_commit_max_amount_changes()` has been used, a commit could be break in s
 
 It allows the importer to collapse several lines of changes to just one per commit, and one per type of file. This allows avoiding excessive growth of files size. The default is set to True.
 
+### Maximum number of changes per commit  
+
+    importer.set_commit_max_amount_changes(max_amount)
+
+The maximum number of changes (line of code changed, added or removed) that a commit can have. Commits with many changes are disadvantaged in GitHub. Most likely these large commits could have been split in many smaller ones. GitHub users that to know how contributions are calculated are prone to do several smaller commits instead, while in private repository this could not be necessary, especially in smaller teams. The default is -1, and it is to indicate no limits.
+
 ### Set Author
 
     importer.set_author(email)
 
-Author to analyse. If not set, commits from any author will be imported. Author is given as email.
+Author to analyse. If not set, commits from any author will be imported. Author is given as email. This could also be an array in case the author uses different emails.
 
 
 ## Contributing

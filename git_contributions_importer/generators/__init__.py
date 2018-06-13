@@ -35,11 +35,11 @@ available_generators = {
 
 
 def apply(content, stats):
-    for ext, num in stats.insertions.items():
-        if ext in available_generators:
-            gen = available_generators[ext]()
-            gen.insert(content.get(ext), num)
     for ext, num in stats.deletions.items():
         if ext in available_generators:
             gen = available_generators[ext]()
             gen.delete(content.get(ext), num)
+    for ext, num in stats.insertions.items():
+        if ext in available_generators:
+            gen = available_generators[ext]()
+            gen.insert(content.get(ext), num)
