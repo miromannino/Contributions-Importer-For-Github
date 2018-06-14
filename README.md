@@ -3,7 +3,7 @@
 This tool helps users to import contributions to GitHub from private git repositories, or from public repositories that are not hosted in GitHub.
 
 <p style="margin: 20px" align="center">
-<img alt="idea" src="https://github.com/miromannino/contributions-importer-for-github/blob/resources/fig1.png" />
+<img src="https://github.com/miromannino/contributions-importer-for-github/blob/resources/fig1.png" />
 </p>
 
 
@@ -12,7 +12,7 @@ This tool helps users to import contributions to GitHub from private git reposit
 In its simplest case, this tools copies all commits from a source git repository to a mock git repository. Each copied commit will report the same commit date, but the original code is not copied, neither the commit message.
 
 <p style="margin: 20px" align="center">
-<img alt="idea" src="https://github.com/miromannino/contributions-importer-for-github/blob/resources/fig.png" />
+<img src="https://github.com/miromannino/contributions-importer-for-github/blob/resources/fig0.png" />
 </p>
 
 _Contributions Importer_ will create instead mock code in order to report which languages have been used in the source repository.
