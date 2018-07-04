@@ -76,13 +76,13 @@ It allows the importer to collapse several lines of changes to just one per comm
 
     importer.set_commit_max_amount_changes(max_amount)
 
-The maximum number of changes (line of code changed, added or removed) that a commit can have. Commits with many changes are disadvantaged in GitHub. Most likely these large commits could have been split in many smaller ones. GitHub users that to know how contributions are calculated are prone to do several smaller commits instead, while in private repository this could not be necessary, especially in smaller teams. The default is -1, and it is to indicate no limits.
+The maximum number of changes (line of code changed, added or removed) that a commit can have. Commits with many changes are disadvantaged in GitHub. Most likely these large commits could have been split in many smaller ones. GitHub users that know how contributions are calculated are prone to do several smaller commits instead, while in private repository this could not be necessary, especially in smaller teams. The default is -1, and it is to indicate no limits.
 
-### Maximum time backward for splitted commits
+### Maximum time backward
 
     importer.set_changes_commits_max_time_backward(max_amount)
 
-If `set_commit_max_amount_changes()` has been used, a commit could be break in several ones. In that case this value decides how long these commits could go in the past. The idea is that a big commit is likely composed by several features that could have been committed in different commits. These changes would have been some time before the actual real commit. The time is in seconds, the default is 4 days.
+If `set_commit_max_amount_changes()` has been used, a commit could be split. In that case this value decides how long these commits could go in the past. The idea is that a big commit is likely composed by several features that could have been committed in different commits. These changes would have been some time before the actual real commit. The time is in seconds, the default is 4 days (good in simpler projects where there is a "backup" commit every week).
 
 ### Set Author
 
