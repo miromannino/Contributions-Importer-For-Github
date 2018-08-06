@@ -17,6 +17,7 @@ class Committer:
         readme_path = os.path.dirname(__file__) + '/README.md'
         mockrepo_readme_path = self.mock_repo_path + '/README.md'
         shutil.copyfile(readme_path, mockrepo_readme_path)
+        self.mock_repo.git.add(self.mock_repo_path + '/README.md')
 
     ''' performs the commit. date is in seconds from epoch '''
     def commit(self, date, message):
