@@ -40,6 +40,9 @@ class Importer:
         # and one per type of file. This allows avoiding excessive growth of files size.
         self.collapse_multiple_changes_to_one = True
 
+        # In case the settings above are too crazy it doesn't commit too much (the array is to have a random value instead of a specific one)
+        self.max_commits_per_day = [10,15];
+
         # Author to analyse. If None commits from any author will be imported. Author is given as email
         # This could be an array of email in case, depending on the repository, the author has different emails.
         self.author = None
@@ -51,6 +54,7 @@ class Importer:
 
     def import_repository(self):
         last_committed_date = 0
+        commits_for_last_day = 0
 
         for c in self.get_all_commits():
             print('\nAnalysing commit at ' + time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(c.committed_date)))
@@ -91,6 +95,13 @@ class Importer:
                         max_past = min(break_committed_date - last_committed_date,
                                        self.changes_commits_max_time_backward)
                     break_committed_date -= int(random() * (max_past / 3) + (max_past / 3 * 2))
+                if time.strftime("%Y-%m-%d", time.gmtime(last_committed_date)) == time.strftime("%Y-%m-%d", time.gmtime(break_committed_date)):
+                    commits_for_last_day += 1
+                    if commits_for_last_day > random() * (self.max_commits_per_day[1] - self.max_commits_per_day[0]) + self.max_commits_per_day[0]:
+                        print('    Commit skipped because the maximum amout of commit for ' + time.strftime("%Y-%m-%d", time.gmtime(last_committed_date)) + ' exceeded')
+                        continue
+                else:
+                    commits_for_last_day = 1
                 print('    Commit at: ' + time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(break_committed_date)))
                 message = 'add code in files types: ' + ','.join(broken_stats.insertions.keys()) + \
                           '\nremoved code in files types: ' + ','.join(broken_stats.deletions.keys())
@@ -135,6 +146,9 @@ class Importer:
 
     def set_max_changes_per_file(self, value):
         self.max_changes_per_file = value
+
+    def set_max_commits_per_day(self, value):
+        self.max_commits_per_day = value
 
     def set_author(self, author):
         self.author = author
