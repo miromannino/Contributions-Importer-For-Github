@@ -38,7 +38,7 @@ class Content:
     def get_files(self):
         return map(lambda fn: Content.FILENAME + fn, self.contents.keys())
 
-    def get(self, ext):
+    def get(self, ext): 
         if ext not in self.contents:
             self.contents[ext] = []
         return self.contents[ext]
