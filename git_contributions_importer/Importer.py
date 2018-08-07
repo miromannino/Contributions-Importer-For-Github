@@ -40,6 +40,9 @@ class Importer:
         # and one per type of file. This allows avoiding excessive growth of files size.
         self.collapse_multiple_changes_to_one = True
 
+        # It allows some types of files to be ignored. For example ['.csv', '.txt', '.pdf', '.log', '.sql', '.json']
+        self.ignored_file_types = []
+
         # In case the settings above are too crazy it doesn't commit too much (the array is to have a random value instead of a specific one)
         self.max_commits_per_day = [10,15];
 
@@ -127,6 +130,7 @@ class Importer:
     def get_changes(self, commit, stats):
         for k, v in commit.stats.files.items():
             ext = pathlib.Path(k).suffix
+            if ext in self.ignored_file_types: continue
             if v['insertions'] > 0:
                 stats.add_insertions(ext, v['insertions'])
             if v['deletions'] > 0:
@@ -143,6 +147,9 @@ class Importer:
 
     def set_collapse_multiple_changes_to_one(self, value):
         self.collapse_multiple_changes_to_one = value
+
+    def set_ignored_file_types(self, file_types):
+        self.ignored_file_types = file_types;
 
     def set_max_changes_per_file(self, value):
         self.max_changes_per_file = value
