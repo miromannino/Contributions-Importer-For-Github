@@ -2,12 +2,17 @@
 
 This tool helps users to import contributions to GitHub from private git repositories, or from public repositories that are not hosted in GitHub.
 
+<p style="margin: 20px" align="center">
+<img src="https://github.com/miromannino/contributions-importer-for-github/blob/resources/fig1.png" />
+</p>
+
+
 ## How it Works
 
 In its simplest case, this tools copies all commits from a source git repository to a mock git repository. Each copied commit will report the same commit date, but the original code is not copied, neither the commit message.
 
 <p style="margin: 20px" align="center">
-<img alt="idea" src="https://github.com/miromannino/contributions-importer-for-github/blob/resources/fig.png" />
+<img src="https://github.com/miromannino/contributions-importer-for-github/blob/resources/fig0.png" />
 </p>
 
 _Contributions Importer_ will create instead mock code in order to report which languages have been used in the source repository.
@@ -24,7 +29,7 @@ Considering the undeniably popularity of GitHub, developers that use other platf
 
 In more extreme cases, some developers decided to boycott this GitHub's lock-in system, and developed tools that can alter GitHub's contribution graph with fake commits: [Rockstar](https://github.com/avinassh/rockstar) and [Vanity text for GitHub](https://github.com/ihabunek/github-vanity) are good examples. 
 
-Instead, the aim of [Contributions Importer for GitHub](https://github.com/miromannino/contributions-importer-for-github) is to generate an overall realistic contributions overview.
+Instead, the aim of [Contributions Importer for GitHub](https://github.com/miromannino/contributions-importer-for-github) is to generate an overall realistic activity overview.
 
 
 ## How to Use 
@@ -60,12 +65,6 @@ Maximum amount in the past that the commit can be shifted for. The values are in
     importer.set_max_changes_per_file(max_amount)
 
 Maximum number of changes per file. By default for each change (line of code changed, added or removed) a line of mock code is changed. Instead, `set_max_changes_per_file()` would limit the number of generated mock code for extreme cases where too many lines of codes are changes (e.g. SQL database dump). The default is 5.
-        
-### Maximum time backward for splitted commits
-
-    importer.set_changes_commits_max_time_backward(max_amount)
-
-If `set_commit_max_amount_changes()` has been used, a commit could be break in several ones. In that case this value decides how long these commits could go in the past. The idea is that a big commit is likely composed by several features that could have been committed in different commits. These changes would have been some time before the actual real commit. The time is in seconds, the default is 4 days.
 
 ### Collapse multiple changes into one
 
@@ -77,7 +76,13 @@ It allows the importer to collapse several lines of changes to just one per comm
 
     importer.set_commit_max_amount_changes(max_amount)
 
-The maximum number of changes (line of code changed, added or removed) that a commit can have. Commits with many changes are disadvantaged in GitHub. Most likely these large commits could have been split in many smaller ones. GitHub users that to know how contributions are calculated are prone to do several smaller commits instead, while in private repository this could not be necessary, especially in smaller teams. The default is -1, and it is to indicate no limits.
+The maximum number of changes (line of code changed, added or removed) that a commit can have. Commits with many changes are disadvantaged in GitHub. Most likely these large commits could have been split in many smaller ones. GitHub users that know how contributions are calculated are prone to do several smaller commits instead, while in private repository this could not be necessary, especially in smaller teams. The default is -1, and it is to indicate no limits.
+
+### Maximum time backward
+
+    importer.set_changes_commits_max_time_backward(max_amount)
+
+If `set_commit_max_amount_changes()` has been used, a commit could be split. In that case this value decides how long these commits could go in the past. The idea is that a big commit is likely composed by several features that could have been committed in different commits. These changes would have been some time before the actual real commit. The time is in seconds, the default is 4 days (good in simpler projects where there is a "backup" commit every week).
 
 ### Set Author
 
