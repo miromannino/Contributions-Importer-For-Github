@@ -44,7 +44,10 @@ class Importer:
         self.ignored_file_types = []
 
         # In case the settings above are too crazy it doesn't commit too much (the array is to have a random value instead of a specific one)
-        self.max_commits_per_day = [10,15];
+        self.max_commits_per_day = [10,15]
+
+        # Ignore all the commits before this date, in order to analyze same repositories over time
+        self.ignore_before_date = None
 
         # Author to analyse. If None commits from any author will be imported. Author is given as email
         # This could be an array of email in case, depending on the repository, the author has different emails.
@@ -61,6 +64,8 @@ class Importer:
 
         for c in self.get_all_commits():
             print('\nAnalysing commit at ' + time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(c.committed_date)))
+            if self.ignore_before_date != None and c.committed_date <= self.ignore_before_date:
+                continue
 
             if self.author is not None:
                 if isinstance(self.author, list):
@@ -149,13 +154,16 @@ class Importer:
         self.collapse_multiple_changes_to_one = value
 
     def set_ignored_file_types(self, file_types):
-        self.ignored_file_types = file_types;
+        self.ignored_file_types = file_types
 
     def set_max_changes_per_file(self, value):
         self.max_changes_per_file = value
 
     def set_max_commits_per_day(self, value):
         self.max_commits_per_day = value
+
+    def set_ignore_before_date(self, value):
+        self.ignore_before_date = value
 
     def set_author(self, author):
         self.author = author
