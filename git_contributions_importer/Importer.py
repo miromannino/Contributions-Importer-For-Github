@@ -59,10 +59,12 @@ class Importer:
         self.committer = Committer(mock_repo, self.content)
 
     def import_repository(self):
-        last_committed_date = 0
+        last_committed_date = self.committer.get_last_commit_date()
         commits_for_last_day = 0
 
-        for c in self.get_all_commits():
+        print('\nStarting')
+
+        for c in self.get_all_commits(last_committed_date):
             print('\nAnalysing commit at ' + time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(c.committed_date)))
             if self.ignore_before_date != None and c.committed_date <= self.ignore_before_date:
                 continue
@@ -117,13 +119,13 @@ class Importer:
                 last_committed_date = break_committed_date
 
     ''' iter commits coming from any branch'''
-
-    def get_all_commits(self):
+    def get_all_commits(self, ignore_before_date):
         commits = []
         s = set()  # to remove duplicated commits form other branches
         for repo in self.repos:
             for b in repo.branches:
                 for c in repo.iter_commits(b.name):
+                    if c.committed_date < ignore_before_date: continue
                     if c.hexsha not in s:
                         s.add(c.hexsha)
                         commits.append(c)
@@ -131,7 +133,6 @@ class Importer:
         return commits
 
     ''' for a specific commit it gets all the changed files '''
-
     def get_changes(self, commit, stats):
         for k, v in commit.stats.files.items():
             ext = pathlib.Path(k).suffix
