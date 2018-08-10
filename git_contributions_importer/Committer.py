@@ -19,6 +19,15 @@ class Committer:
         shutil.copyfile(readme_path, mockrepo_readme_path)
         self.mock_repo.git.add(self.mock_repo_path + '/README.md')
 
+    ''' returns the last commit date in ms from epoch'''
+    def get_last_commit_date(self):
+        last_commit_date = 0
+        for b in self.mock_repo.branches:
+            for c in self.mock_repo.iter_commits(b.name):
+                if c.committed_date > last_commit_date:
+                    last_commit_date = c.committed_date
+        return last_commit_date
+
     ''' performs the commit. date is in seconds from epoch '''
     def commit(self, date, message):
         self.check_readme()
