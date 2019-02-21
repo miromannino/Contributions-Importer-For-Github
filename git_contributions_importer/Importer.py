@@ -49,6 +49,9 @@ class Importer:
         # Ignore all the commits before this date, in order to analyze same repositories over time
         self.ignore_before_date = None
 
+        # Ignore all the commits before last commit
+        self.start_from_last = False
+
         # Author to analyse. If None commits from any author will be imported. Author is given as email
         # This could be an array of email in case, depending on the repository, the author has different emails.
         self.author = None
@@ -59,15 +62,17 @@ class Importer:
         self.committer = Committer(mock_repo, self.content)
 
     def import_repository(self):
-        last_committed_date = self.committer.get_last_commit_date()
         commits_for_last_day = 0
 
-        print('\nStarting')
+        if self.start_from_last:
+            last_committed_date = self.committer.get_last_commit_date()
+            print('\nStarting from last commit: ' + time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(last_committed_date)))
+        else:
+            print('\nStarting')
+            last_committed_date = 0
 
         for c in self.get_all_commits(last_committed_date):
             print('\nAnalysing commit at ' + time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(c.committed_date)))
-            if self.ignore_before_date != None and c.committed_date <= self.ignore_before_date:
-                continue
 
             if self.author is not None:
                 if isinstance(self.author, list):
@@ -125,7 +130,7 @@ class Importer:
         for repo in self.repos:
             for b in repo.branches:
                 for c in repo.iter_commits(b.name):
-                    if c.committed_date < ignore_before_date: continue
+                    if c.committed_date < ignore_before_date or (self.ignore_before_date != None and c.committed_date < self.ignore_before_date): continue
                     if c.hexsha not in s:
                         s.add(c.hexsha)
                         commits.append(c)
@@ -165,6 +170,9 @@ class Importer:
 
     def set_ignore_before_date(self, value):
         self.ignore_before_date = value
+
+    def set_start_from_last(self, value):
+        self.start_from_last = value
 
     def set_author(self, author):
         self.author = author
