@@ -27,24 +27,24 @@ Moreover, this mechanism only rewards developers that work on GitHub maintained 
 
 Considering the undeniably popularity of GitHub, developers that use other platforms are disadvantaged. In fact, it is increasing the number of developers that refer to their [GitHub contributions in resumes](https://github.com/resume/resume.github.com). Similarly, recruiters [may use GitHub to find talents](https://www.socialtalent.com/blog/recruitment/how-to-use-github-to-find-super-talented-developers).
 
-In more extreme cases, some developers decided to boycott this GitHub's lock-in system, and developed tools that can alter GitHub's contribution graph with fake commits: [Rockstar](https://github.com/avinassh/rockstar) and [Vanity text for GitHub](https://github.com/ihabunek/github-vanity) are good examples. 
+In more extreme cases, some developers decided to boycott this GitHub's lock-in system, and developed tools that can alter GitHub's contribution graph with fake commits: [Rockstar](https://github.com/avinassh/rockstar) and [Vanity text for GitHub](https://github.com/ihabunek/github-vanity) are good examples.
 
 Instead, the aim of [Contributions Importer for GitHub](https://github.com/miromannino/contributions-importer-for-github) is to generate an overall realistic activity overview.
 
 
-## How to Use 
+## How to Use
 
 _Contributions Importer_ is for developers. No UI, nor simple command line tools. This tool can be used by writing a simple Python script:
 
     import git
     from git_contributions_importer import *
-    
+
     repo = git.Repo("path/to/your/private/repo")
     mock_repo = git.Repo("path/to/your/mock/repo")
-    
+
     importer = Importer([repo], mock_repo)
     importer.set_author('email@domain.com')
-      
+
     importer.import_repository()
 
 If the mock repository folder could be an empty git repository as well as a repository that has already other commits.
@@ -56,7 +56,7 @@ _Contributions Importer_ has few features to protect your  private code.
 
 ### Masking the real commit time  
 
-    importer.set_commit_time_max_past(value) 
+    importer.set_commit_time_max_past(value)
 
 Maximum amount in the past that the commit can be shifted for. The values are in seconds.
 
@@ -84,12 +84,23 @@ The maximum number of changes (line of code changed, added or removed) that a co
 
 If `set_commit_max_amount_changes()` has been used, a commit could be split. In that case this value decides how long these commits could go in the past. The idea is that a big commit is likely composed by several features that could have been committed in different commits. These changes would have been some time before the actual real commit. The time is in seconds, the default is 4 days (good in simpler projects where there is a "backup" commit every week).
 
+### Ignore Before Date
+
+    importer.set_ignore_before_date(value)
+
+Importer will ignore all commits before this date (number of seconds from 1970-01-01 UTC)
+
+### Just last commit
+
+    importer.set_start_from_last(false)
+
+The importer will fetch last commited date from mock_repo and will ignore all commits before this date. If `ignore_before_date` is set all commits before the most recent date between last commit and `ignore_before_date` will be ignored. Useful to do incremental imports.
+
 ### Set Author
 
     importer.set_author(email)
 
 Author to analyse. If not set, commits from any author will be imported. Author is given as email. This could also be an array in case the author uses different emails.
-
 
 ## Contributing
 
