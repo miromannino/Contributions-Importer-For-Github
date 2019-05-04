@@ -33,7 +33,7 @@ class Importer:
         # In that case this value decides how long these commits could go in the past. The idea
         # is that a big commit is likely composed by several features that could have been
         # committed in different commits. These changes would have been some time before the actual
-        # big commit. The time is in seconds. '''
+        # big commit. The time is in seconds.
         self.changes_commits_max_time_backward = 60*60*24*4  # 4 days as default
 
         # It allows the importer to collapse several lines of changes to just one per commit,
@@ -108,13 +108,13 @@ class Importer:
                 if time.strftime("%Y-%m-%d", time.gmtime(last_committed_date)) == time.strftime("%Y-%m-%d", time.gmtime(break_committed_date)):
                     commits_for_last_day += 1
                     if commits_for_last_day > random() * (self.max_commits_per_day[1] - self.max_commits_per_day[0]) + self.max_commits_per_day[0]:
-                        print('    Commit skipped because the maximum amout of commit for ' + time.strftime("%Y-%m-%d", time.gmtime(last_committed_date)) + ' exceeded')
+                        print('    Commit skipped because the maximum amount of commit for ' + time.strftime("%Y-%m-%d", time.gmtime(last_committed_date)) + ' exceeded')
                         continue
                 else:
                     commits_for_last_day = 1
                 print('    Commit at: ' + time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(break_committed_date)))
                 message = 'add code in files types: ' + ','.join(broken_stats.insertions.keys()) + \
-                          '\nremoved code in files types: ' + ','.join(broken_stats.deletions.keys())
+                          '\nremove code in files types: ' + ','.join(broken_stats.deletions.keys())
                 self.committer.commit(break_committed_date, message)
                 last_committed_date = break_committed_date
 
