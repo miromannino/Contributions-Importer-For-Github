@@ -25,7 +25,10 @@ class Committer:
         for b in self.mock_repo.branches:
             for c in self.mock_repo.iter_commits(b.name):
                 if c.committed_date > last_commit_date:
-                    last_commit_date = c.committed_date
+                    if (c.message.startswith("add code in files types:")
+                            or c.message.startswith("removed code in files types:")
+                            or c.message.startswith("remove code in files types:")):
+                        last_commit_date = c.committed_date
         return last_commit_date
 
     ''' performs the commit. date is in seconds from epoch '''
