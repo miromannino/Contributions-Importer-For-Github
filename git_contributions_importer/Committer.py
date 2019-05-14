@@ -33,7 +33,7 @@ class Committer:
         self.check_readme()
         for file in self.content.get_files():
             self.mock_repo.git.add(os.path.join(self.mock_repo_path, file))
-        date_iso_format = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(date))
+        date_iso_format = time.strftime("%Y-%m-%d %H:%M:%S +0000", time.gmtime(date))
         os.environ['GIT_AUTHOR_DATE'] = date_iso_format
         os.environ['GIT_COMMITTER_DATE'] = date_iso_format
         try:
