@@ -130,7 +130,8 @@ class Importer:
         for repo in self.repos:
             for b in repo.branches:
                 for c in repo.iter_commits(b.name):
-                    if c.committed_date < ignore_before_date or (self.ignore_before_date != None and c.committed_date < self.ignore_before_date): continue
+                    if c.committed_date < ignore_before_date or (self.ignore_before_date != None and c.committed_date < self.ignore_before_date): 
+                        continue
                     if c.hexsha not in s:
                         s.add(c.hexsha)
                         commits.append(c)
