@@ -25,7 +25,10 @@ class Committer:
         for b in self.mock_repo.branches:
             for c in self.mock_repo.iter_commits(b.name):
                 if c.committed_date > last_commit_date:
-                    last_commit_date = c.committed_date
+                    if (c.message.startswith("add code in files types:")
+                            or c.message.startswith("removed code in files types:")
+                            or c.message.startswith("remove code in files types:")):
+                        last_commit_date = c.committed_date
         return last_commit_date
 
     ''' performs the commit. date is in seconds from epoch '''
@@ -33,7 +36,7 @@ class Committer:
         self.check_readme()
         for file in self.content.get_files():
             self.mock_repo.git.add(os.path.join(self.mock_repo_path, file))
-        date_iso_format = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(date))
+        date_iso_format = time.strftime("%Y-%m-%d %H:%M:%S +0000", time.gmtime(date))
         os.environ['GIT_AUTHOR_DATE'] = date_iso_format
         os.environ['GIT_COMMITTER_DATE'] = date_iso_format
         try:
