@@ -33,7 +33,7 @@ class Importer:
         # In that case this value decides how long these commits could go in the past. The idea
         # is that a big commit is likely composed by several features that could have been
         # committed in different commits. These changes would have been some time before the actual
-        # big commit. The time is in seconds. '''
+        # big commit. The time is in seconds.
         self.changes_commits_max_time_backward = 60*60*24*4  # 4 days as default
 
         # It allows the importer to collapse several lines of changes to just one per commit,
@@ -49,6 +49,9 @@ class Importer:
         # Ignore all the commits before this date, in order to analyze same repositories over time
         self.ignore_before_date = None
 
+        # Ignore all the commits before last commit
+        self.start_from_last = False
+
         # Author to analyse. If None commits from any author will be imported. Author is given as email
         # This could be an array of email in case, depending on the repository, the author has different emails.
         self.author = None
@@ -59,15 +62,17 @@ class Importer:
         self.committer = Committer(mock_repo, self.content)
 
     def import_repository(self):
-        last_committed_date = self.committer.get_last_commit_date()
         commits_for_last_day = 0
 
-        print('\nStarting')
+        if self.start_from_last:
+            last_committed_date = self.committer.get_last_commit_date()
+            print('\nStarting from last commit: ' + time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(last_committed_date)))
+        else:
+            print('\nStarting')
+            last_committed_date = 0
 
         for c in self.get_all_commits(last_committed_date):
             print('\nAnalysing commit at ' + time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(c.committed_date)))
-            if self.ignore_before_date != None and c.committed_date <= self.ignore_before_date:
-                continue
 
             if self.author is not None:
                 if isinstance(self.author, list):
@@ -108,13 +113,13 @@ class Importer:
                 if time.strftime("%Y-%m-%d", time.gmtime(last_committed_date)) == time.strftime("%Y-%m-%d", time.gmtime(break_committed_date)):
                     commits_for_last_day += 1
                     if commits_for_last_day > random() * (self.max_commits_per_day[1] - self.max_commits_per_day[0]) + self.max_commits_per_day[0]:
-                        print('    Commit skipped because the maximum amout of commit for ' + time.strftime("%Y-%m-%d", time.gmtime(last_committed_date)) + ' exceeded')
+                        print('    Commit skipped because the maximum amount of commit for ' + time.strftime("%Y-%m-%d", time.gmtime(last_committed_date)) + ' exceeded')
                         continue
                 else:
                     commits_for_last_day = 1
                 print('    Commit at: ' + time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(break_committed_date)))
                 message = 'add code in files types: ' + ','.join(broken_stats.insertions.keys()) + \
-                          '\nremoved code in files types: ' + ','.join(broken_stats.deletions.keys())
+                          '\nremove code in files types: ' + ','.join(broken_stats.deletions.keys())
                 self.committer.commit(break_committed_date, message)
                 last_committed_date = break_committed_date
 
@@ -125,7 +130,8 @@ class Importer:
         for repo in self.repos:
             for b in repo.branches:
                 for c in repo.iter_commits(b.name):
-                    if c.committed_date <= ignore_before_date: continue
+                    if c.committed_date < ignore_before_date or (self.ignore_before_date != None and c.committed_date < self.ignore_before_date): 
+                        continue
                     if c.hexsha not in s:
                         s.add(c.hexsha)
                         commits.append(c)
@@ -165,6 +171,9 @@ class Importer:
 
     def set_ignore_before_date(self, value):
         self.ignore_before_date = value
+
+    def set_start_from_last(self, value):
+        self.start_from_last = value
 
     def set_author(self, author):
         self.author = author
