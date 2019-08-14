@@ -102,6 +102,10 @@ The importer will fetch last commited date from mock_repo and will ignore all co
 
 Author to analyse. If not set, commits from any author will be imported. Author is given as email. This could also be an array in case the author uses different emails.
 
+## Blog Posts about this project
+
+- [How I Restored My Git Contributions](https://medium.com/@razan.joc/how-i-restored-my-git-contributions-7ddb27f06d4e)
+
 ## Contributing
 
 #### Code style
