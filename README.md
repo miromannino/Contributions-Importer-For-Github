@@ -104,7 +104,7 @@ Author to analyse. If not set, commits from any author will be imported. Author 
 
 ## Blog Posts about this project
 
-- [How I Restored My Git Contributions](https://medium.com/@razan.joc/how-i-restored-my-git-contributions-7ddb27f06d4e)
+- [How I Restored My Git Contributions](https://medium.com/@razan.joc/how-i-restored-my-git-contributions-7ddb27f06d4e) by Rajan Joshi
 
 ## Contributing
 
