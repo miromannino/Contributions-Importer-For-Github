@@ -31,6 +31,10 @@ In more extreme cases, some developers decided to boycott this GitHub's lock-in 
 
 Instead, the aim of [Contributions Importer for GitHub](https://github.com/miromannino/contributions-importer-for-github) is to generate an overall realistic activity overview.
 
+## Other good tutorials about this project
+
+- [How I Restored My Git Contributions](https://medium.com/@razan.joc/how-i-restored-my-git-contributions-7ddb27f06d4e) by Rajan Joshi
+- [Import Contributions from Bitbucket to GitHub](https://medium.com/@danielnmai/import-contributions-from-bitbucket-to-github-afd9160eaf6d) by Daniel Mai
 
 ## How to Use
 
@@ -101,11 +105,6 @@ The importer will fetch last commited date from mock_repo and will ignore all co
     importer.set_author(email)
 
 Author to analyse. If not set, commits from any author will be imported. Author is given as email. This could also be an array in case the author uses different emails.
-
-## Blog Posts about this project
-
-- [How I Restored My Git Contributions](https://medium.com/@razan.joc/how-i-restored-my-git-contributions-7ddb27f06d4e) by Rajan Joshi
-- [Import Contributions from Bitbucket to GitHub](https://medium.com/@danielnmai/import-contributions-from-bitbucket-to-github-afd9160eaf6d) by Daniel Mai
 
 ## Contributing
 
