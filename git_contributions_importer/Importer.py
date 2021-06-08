@@ -71,7 +71,7 @@ class Importer:
             print('\nStarting')
             last_committed_date = 0
 
-        for c in self.get_all_commits(last_committed_date):
+        for c in self.get_all_commits(last_committed_date+1):
             print('\nAnalysing commit at ' + time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(c.committed_date)))
 
             if self.author is not None:
