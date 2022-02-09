@@ -14,6 +14,7 @@ from .HtmlGenerator import HtmlGenerator
 from .BashGenerator import BashGenerator
 from .SqlGenerator import SqlGenerator
 from .ScalaGenerator import ScalaGenerator
+from .TsGenerator import TsGenerator
 
 available_generators = {
     '.md': Generator,
@@ -33,6 +34,8 @@ available_generators = {
     '.sh': BashGenerator,
     '.sql': SqlGenerator,
     '.scala': ScalaGenerator,
+    '.ts': TsGenerator,
+    '.tsx': TsGenerator
 }
 
 
