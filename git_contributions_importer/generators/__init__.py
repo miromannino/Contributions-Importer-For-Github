@@ -13,6 +13,7 @@ from .PhpGenerator import PhpGenerator
 from .HtmlGenerator import HtmlGenerator
 from .BashGenerator import BashGenerator
 from .SqlGenerator import SqlGenerator
+from .TsGenerator import TsGenerator
 
 available_generators = {
     '.md': Generator,
@@ -30,7 +31,9 @@ available_generators = {
     '.php': PhpGenerator,
     '.html': HtmlGenerator,
     '.sh': BashGenerator,
-    '.sql': SqlGenerator
+    '.sql': SqlGenerator,
+    '.ts': TsGenerator,
+    '.tsx': TsGenerator
 }
 
 
