@@ -62,7 +62,7 @@ class Importer:
         self.repos = repos
         self.mock_repo = mock_repo
         self.content = Content(mock_repo.working_tree_dir)
-        self.committer = Committer(mock_repo, self.content)
+        self.committer = Committer(mock_repo, self.content, self.keep_commit_messages)
 
     def import_repository(self):
         commits_for_last_day = 0
@@ -186,6 +186,7 @@ class Importer:
 
     def set_keep_commit_messages(self, value):
         self.keep_commit_messages = value
+        self.committer.set_keep_commit_messages(value)
 
 
 class Stats:
