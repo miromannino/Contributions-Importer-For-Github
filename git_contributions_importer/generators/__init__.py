@@ -13,6 +13,7 @@ from .PhpGenerator import PhpGenerator
 from .HtmlGenerator import HtmlGenerator
 from .BashGenerator import BashGenerator
 from .SqlGenerator import SqlGenerator
+from .TerraformGenerator import TerraformGenerator
 from .TsGenerator import TsGenerator
 
 available_generators = {
@@ -33,7 +34,8 @@ available_generators = {
     '.sh': BashGenerator,
     '.sql': SqlGenerator,
     '.ts': TsGenerator,
-    '.tsx': TsGenerator
+    '.tsx': TsGenerator,
+    '.tf': TerraformGenerator
 }
 
 
