@@ -14,6 +14,7 @@ from .HtmlGenerator import HtmlGenerator
 from .BashGenerator import BashGenerator
 from .SqlGenerator import SqlGenerator
 from .ScalaGenerator import ScalaGenerator
+from .SwiftGenerator import SwiftGenerator
 from .TsGenerator import TsGenerator
 
 available_generators = {
@@ -34,6 +35,7 @@ available_generators = {
     '.sh': BashGenerator,
     '.sql': SqlGenerator,
     '.scala': ScalaGenerator,
+    '.swift': SwiftGenerator,
     '.ts': TsGenerator,
     '.tsx': TsGenerator
 }
