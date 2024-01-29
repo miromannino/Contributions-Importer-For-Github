@@ -7,6 +7,7 @@ from .CssGenerator import CssGenerator
 from .CppGenerator import CppGenerator
 from .CGenerator import CGenerator
 from .PyGenerator import PyGenerator
+from .RubyGenerator import RubyGenerator
 from .JsonGenerator import JsonGenerator
 from .LuaGenerator import LuaGenerator
 from .PhpGenerator import PhpGenerator
@@ -35,7 +36,8 @@ available_generators = {
     '.sql': SqlGenerator,
     '.scala': ScalaGenerator,
     '.ts': TsGenerator,
-    '.tsx': TsGenerator
+    '.tsx': TsGenerator,
+    '.rb': RubyGenerator
 }
 
 
