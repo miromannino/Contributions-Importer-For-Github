@@ -9,12 +9,15 @@ from .CGenerator import CGenerator
 from .PyGenerator import PyGenerator
 from .RubyGenerator import RubyGenerator
 from .JsonGenerator import JsonGenerator
+from .KotlinGenerator import KotlinGenerator
 from .LuaGenerator import LuaGenerator
 from .PhpGenerator import PhpGenerator
 from .HtmlGenerator import HtmlGenerator
 from .BashGenerator import BashGenerator
 from .SqlGenerator import SqlGenerator
 from .ScalaGenerator import ScalaGenerator
+from .SwiftGenerator import SwiftGenerator
+from .TerraformGenerator import TerraformGenerator
 from .TsGenerator import TsGenerator
 
 available_generators = {
@@ -29,15 +32,18 @@ available_generators = {
     '.c': CGenerator,
     '.py': PyGenerator,
     '.json': JsonGenerator,
+    '.kt': KotlinGenerator,
     '.lua': LuaGenerator,
     '.php': PhpGenerator,
     '.html': HtmlGenerator,
     '.sh': BashGenerator,
     '.sql': SqlGenerator,
     '.scala': ScalaGenerator,
+    '.swift': SwiftGenerator,
     '.ts': TsGenerator,
     '.tsx': TsGenerator,
     '.rb': RubyGenerator
+    '.tf': TerraformGenerator
 }
 
 
