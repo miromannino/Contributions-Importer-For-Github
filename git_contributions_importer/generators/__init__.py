@@ -8,6 +8,7 @@ from .CppGenerator import CppGenerator
 from .CGenerator import CGenerator
 from .PyGenerator import PyGenerator
 from .JsonGenerator import JsonGenerator
+from .KotlinGenerator import KotlinGenerator
 from .LuaGenerator import LuaGenerator
 from .PhpGenerator import PhpGenerator
 from .HtmlGenerator import HtmlGenerator
@@ -28,6 +29,7 @@ available_generators = {
     '.c': CGenerator,
     '.py': PyGenerator,
     '.json': JsonGenerator,
+    '.kt': KotlinGenerator,
     '.lua': LuaGenerator,
     '.php': PhpGenerator,
     '.html': HtmlGenerator,
