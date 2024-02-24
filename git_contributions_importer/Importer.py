@@ -56,10 +56,13 @@ class Importer:
         # This could be an array of email in case, depending on the repository, the author has different emails.
         self.author = None
 
+        # Keep the original commit message if true
+        self.keep_commit_messages = False
+
         self.repos = repos
         self.mock_repo = mock_repo
         self.content = Content(mock_repo.working_tree_dir)
-        self.committer = Committer(mock_repo, self.content)
+        self.committer = Committer(mock_repo, self.content, self.keep_commit_messages)
 
     def import_repository(self):
         commits_for_last_day = 0
@@ -118,7 +121,10 @@ class Importer:
                 else:
                     commits_for_last_day = 1
                 print('    Commit at: ' + time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(break_committed_date)))
-                message = 'add code in files types: ' + ','.join(broken_stats.insertions.keys()) + \
+                if self.keep_commit_messages:
+                    message = c.message
+                else:
+                    message = 'add code in files types: ' + ','.join(broken_stats.insertions.keys()) + \
                           '\nremove code in files types: ' + ','.join(broken_stats.deletions.keys())
                 self.committer.commit(break_committed_date, message)
                 last_committed_date = break_committed_date
@@ -177,6 +183,10 @@ class Importer:
 
     def set_author(self, author):
         self.author = author
+
+    def set_keep_commit_messages(self, value):
+        self.keep_commit_messages = value
+        self.committer.set_keep_commit_messages(value)
 
 
 class Stats:
