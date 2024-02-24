@@ -7,6 +7,7 @@ from .CssGenerator import CssGenerator
 from .CppGenerator import CppGenerator
 from .CGenerator import CGenerator
 from .PyGenerator import PyGenerator
+from .RubyGenerator import RubyGenerator
 from .JsonGenerator import JsonGenerator
 from .KotlinGenerator import KotlinGenerator
 from .LuaGenerator import LuaGenerator
@@ -41,6 +42,7 @@ available_generators = {
     '.swift': SwiftGenerator,
     '.ts': TsGenerator,
     '.tsx': TsGenerator,
+    '.rb': RubyGenerator
     '.tf': TerraformGenerator
 }
 
