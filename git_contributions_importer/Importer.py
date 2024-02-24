@@ -52,7 +52,7 @@ class Importer:
         # Ignore all the commits before last commit
         self.start_from_last = False
 
-        # Author to analyse. If None commits from any author will be imported. Author is given as email
+        # Author to analyze. If None commits from any author will be imported. Author is given as email
         # This could be an array of email in case, depending on the repository, the author has different emails.
         self.author = None
 
@@ -72,7 +72,7 @@ class Importer:
             last_committed_date = 0
 
         for c in self.get_all_commits(last_committed_date+1):
-            print('\nAnalysing commit at ' + time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(c.committed_date)))
+            print('\analyze commit at ' + time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(c.committed_date)))
 
             if self.author is not None:
                 if isinstance(self.author, list):
@@ -126,7 +126,7 @@ class Importer:
     ''' iter commits coming from any branch'''
     def get_all_commits(self, ignore_before_date):
         commits = []
-        s = set()  # to remove duplicated commits form other branches
+        s = set()  # to remove duplicated commits from other branches
         for repo in self.repos:
             for b in repo.branches:
                 for c in repo.iter_commits(b.name):
