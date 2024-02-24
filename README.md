@@ -106,6 +106,11 @@ The importer will fetch last commited date from mock_repo and will ignore all co
 
 Author to analyse. If not set, commits from any author will be imported. Author is given as email. This could also be an array in case the author uses different emails.
 
+### Keep commit messages
+
+    importer.set_keep_commit_messages(value)
+
+The importer will mantain the original commit message instead of the mocked one. By default the flag is setted to False
 ## Contributing
 
 #### Code style

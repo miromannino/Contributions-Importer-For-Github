@@ -8,10 +8,14 @@ import shutil
 
 class Committer:
 
-    def __init__(self, mock_repo, content):
+    def __init__(self, mock_repo, content, keep_commit_messages):
         self.mock_repo = mock_repo
         self.mock_repo_path = self.mock_repo.working_tree_dir
         self.content = content
+        self.keep_commit_messages = keep_commit_messages
+
+    def set_keep_commit_messages(self, value):
+        self.keep_commit_messages = value
 
     def check_readme(self):
         readme_path = os.path.dirname(__file__) + '/README.md'
@@ -27,7 +31,8 @@ class Committer:
                 if c.committed_date > last_commit_date:
                     if (c.message.startswith("add code in files types:")
                             or c.message.startswith("removed code in files types:")
-                            or c.message.startswith("remove code in files types:")):
+                            or c.message.startswith("remove code in files types:")
+                            or self.keep_commit_messages):
                         last_commit_date = c.committed_date
         return last_commit_date
 
