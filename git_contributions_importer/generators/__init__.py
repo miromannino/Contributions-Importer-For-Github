@@ -8,6 +8,7 @@ from .CppGenerator import CppGenerator
 from .CGenerator import CGenerator
 from .PyGenerator import PyGenerator
 from .JsonGenerator import JsonGenerator
+from .KotlinGenerator import KotlinGenerator
 from .LuaGenerator import LuaGenerator
 from .PhpGenerator import PhpGenerator
 from .HtmlGenerator import HtmlGenerator
@@ -15,6 +16,7 @@ from .BashGenerator import BashGenerator
 from .SqlGenerator import SqlGenerator
 from .ScalaGenerator import ScalaGenerator
 from .SwiftGenerator import SwiftGenerator
+from .TerraformGenerator import TerraformGenerator
 from .TsGenerator import TsGenerator
 
 available_generators = {
@@ -29,6 +31,7 @@ available_generators = {
     '.c': CGenerator,
     '.py': PyGenerator,
     '.json': JsonGenerator,
+    '.kt': KotlinGenerator,
     '.lua': LuaGenerator,
     '.php': PhpGenerator,
     '.html': HtmlGenerator,
@@ -37,7 +40,8 @@ available_generators = {
     '.scala': ScalaGenerator,
     '.swift': SwiftGenerator,
     '.ts': TsGenerator,
-    '.tsx': TsGenerator
+    '.tsx': TsGenerator,
+    '.tf': TerraformGenerator
 }
 
 
