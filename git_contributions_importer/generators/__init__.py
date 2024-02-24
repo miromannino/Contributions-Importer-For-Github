@@ -15,6 +15,7 @@ from .HtmlGenerator import HtmlGenerator
 from .BashGenerator import BashGenerator
 from .SqlGenerator import SqlGenerator
 from .ScalaGenerator import ScalaGenerator
+from .TerraformGenerator import TerraformGenerator
 from .TsGenerator import TsGenerator
 
 available_generators = {
@@ -37,7 +38,8 @@ available_generators = {
     '.sql': SqlGenerator,
     '.scala': ScalaGenerator,
     '.ts': TsGenerator,
-    '.tsx': TsGenerator
+    '.tsx': TsGenerator,
+    '.tf': TerraformGenerator
 }
 
 
