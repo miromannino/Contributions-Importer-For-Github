@@ -9,27 +9,27 @@ This tool helps users to import contributions to GitHub from private git reposit
 
 ## How it Works
 
-In its simplest case, this tools copies all commits from a source git repository to a mock git repository. Each copied commit will report the same commit date, but the original code is not copied, neither the commit message.
+In its simplest case, this tool copies all commits from a source git repository to a mock git repository. Each copied commit will report the same commit date, but the original code is not copied, nor is the commit message.
 
 <p style="margin: 20px" align="center">
 <img src="https://github.com/miromannino/contributions-importer-for-github/blob/resources/fig0.png" />
 </p>
 
-_Contributions Importer_ will create instead mock code in order to report which languages have been used in the source repository.
+_Contributions Importer_ will create instead mock code to report which languages have been used in the source repository.
 
-You can also have multiple source git repository as well in order to report activities from several private git repositories.
+You can also have multiple source git repositories as well to report activities from several private git repositories.
 
 ## Reasons
 
 GitHub shows contributions statistics of its users. There are [several reasons](https://github.com/isaacs/github/issues/627) why this feature could be debatable.
 
-Moreover, this mechanism only rewards developers that work on GitHub maintained repositories.
+Moreover, this mechanism only rewards developers who work on GitHub-maintained repositories.
 
-Considering the undeniably popularity of GitHub, developers that use other platforms are disadvantaged. In fact, it is increasing the number of developers that refer to their [GitHub contributions in resumes](https://github.com/resume/resume.github.com). Similarly, recruiters [may use GitHub to find talents](https://www.socialtalent.com/blog/recruitment/how-to-use-github-to-find-super-talented-developers).
+Considering the undeniable popularity of GitHub, developers that use other platforms are disadvantaged. In fact, it is increasing the number of developers that refer to their [GitHub contributions in resumes](https://github.com/resume/resume.github.com). Similarly, recruiters [may use GitHub to find talent](https://www.socialtalent.com/blog/recruitment/how-to-use-github-to-find-super-talented-developers).
 
-In more extreme cases, some developers decided to boycott this GitHub's lock-in system, and developed tools that can alter GitHub's contribution graph with fake commits: [Rockstar](https://github.com/avinassh/rockstar) and [Vanity text for GitHub](https://github.com/ihabunek/github-vanity) are good examples.
+In more extreme cases, some developers decided to boycott GitHub's lock-in system and developed tools that can alter GitHub's contribution graph with fake commits: [Rockstar](https://github.com/avinassh/rockstar) and [Vanity text for GitHub](https://github.com/ihabunek/github-vanity) are good examples.
 
-Instead, the aim of [Contributions Importer for GitHub](https://github.com/miromannino/contributions-importer-for-github) is to generate an overall realistic activity overview.
+Instead, [Contributions Importer for GitHub](https://github.com/miromannino/contributions-importer-for-github) aims to generate an overall realistic activity overview.
 
 ## Other good tutorials about this project
 
@@ -37,6 +37,14 @@ Instead, the aim of [Contributions Importer for GitHub](https://github.com/mirom
 - [Import Contributions from Bitbucket to GitHub](https://medium.com/@danielnmai/import-contributions-from-bitbucket-to-github-afd9160eaf6d) by Daniel Mai
 
 ## How to Use
+
+Make sure you have first of all `pipenv` installed. Afterward, install all the dependencies and spawn a shell in a virtual environment in the following way:
+
+```bash
+cd contributions-importer-for-github
+pipenv install
+pipenv shell
+```
 
 _Contributions Importer_ is for developers. No UI, nor simple command line tools. This tool can be used by writing a simple Python script:
 
@@ -56,7 +64,7 @@ If the mock repository folder could be an empty git repository as well as a repo
 
 ## Protecting your private repository
 
-_Contributions Importer_ has few features to protect your  private code.
+_Contributions Importer_ has a few features to protect your private code.
 
 ### Masking the real commit time  
 
@@ -68,25 +76,25 @@ Maximum amount in the past that the commit can be shifted for. The values are in
 
     importer.set_max_changes_per_file(max_amount)
 
-Maximum number of changes per file. By default for each change (line of code changed, added or removed) a line of mock code is changed. Instead, `set_max_changes_per_file()` would limit the number of generated mock code for extreme cases where too many lines of codes are changes (e.g. SQL database dump). The default is 5.
+Maximum number of changes per file. By default for each change (line of code changed, added or removed) a line of mock code is changed. Instead, `set_max_changes_per_file()` would limit the number of generated mock codes for extreme cases where too many lines of codes are changed (e.g. SQL database dump). The default is 5.
 
 ### Collapse multiple changes into one
 
     importer.set_collapse_multiple_changes_to_one(true)
 
-It allows the importer to collapse several lines of changes to just one per commit, and one per type of file. This allows avoiding excessive growth of files size. The default is set to True.
+It allows the importer to collapse several lines of changes to just one per commit, and one per type of file. This allows for avoiding excessive growth of file size. The default is set to True.
 
 ### Maximum number of changes per commit  
 
     importer.set_commit_max_amount_changes(max_amount)
 
-The maximum number of changes (line of code changed, added or removed) that a commit can have. Commits with many changes are disadvantaged in GitHub. Most likely these large commits could have been split in many smaller ones. GitHub users that know how contributions are calculated are prone to do several smaller commits instead, while in private repository this could not be necessary, especially in smaller teams. The default is -1, and it is to indicate no limits.
+The maximum number of changes (line of code changed, added or removed) that a commit can have. Commits with many changes are disadvantaged in GitHub. Most likely these large commits could have been split into many smaller ones. GitHub users who know how contributions are calculated are prone to do several smaller commits instead, while in a private repository, this could not be necessary, especially in smaller teams. The default is -1, and it is to indicate no limits.
 
 ### Maximum time backward
 
     importer.set_changes_commits_max_time_backward(max_amount)
 
-If `set_commit_max_amount_changes()` has been used, a commit could be split. In that case this value decides how long these commits could go in the past. The idea is that a big commit is likely composed by several features that could have been committed in different commits. These changes would have been some time before the actual real commit. The time is in seconds, the default is 4 days (good in simpler projects where there is a "backup" commit every week).
+If `set_commit_max_amount_changes()` has been used, a commit could be split. In that case, this value decides how long these commits could go in the past. The idea is that a big commit is likely composed of several features that could have been committed in different commits. These changes would have been some time before the actual real commit. The time is in seconds, the default is 4 days (good in simpler projects where there is a "backup" commit every week).
 
 ### Ignore Before Date
 
@@ -98,23 +106,24 @@ Importer will ignore all commits before this date (number of seconds from 1970-0
 
     importer.set_start_from_last(false)
 
-The importer will fetch last commited date from mock_repo and will ignore all commits before this date. If `ignore_before_date` is set all commits before the most recent date between last commit and `ignore_before_date` will be ignored. Useful to do incremental imports.
+The importer will fetch the last committed date from mock_repo and will ignore all commits before this date. If `ignore_before_date` is set all commits before the most recent date between the last commit and `ignore_before_date` will be ignored. Useful to do incremental imports.
 
 ### Set Author
 
     importer.set_author(email)
 
-Author to analyse. If not set, commits from any author will be imported. Author is given as email. This could also be an array in case the author uses different emails.
+Author to analyze. If not set, commits from any author will be imported. The author is given as email. This could also be an array in case the author uses different emails.
 
 ### Keep commit messages
 
     importer.set_keep_commit_messages(value)
 
-The importer will mantain the original commit message instead of the mocked one. By default the flag is setted to False
+The importer will maintain the original commit message instead of the mocked one. By default, the flag is set to False
+
 ## Contributing
 
-#### Code style
-Regarding code style like indentation and whitespace, **follow the conventions you see used in the source already.**
+### Code style
+Regarding code styles like indentation and whitespace, **follow the conventions you see used in the source already.**
 
 ### Submitting pull requests
 
