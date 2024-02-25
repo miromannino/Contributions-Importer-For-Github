@@ -2,26 +2,23 @@ import sys
 import git
 from src import *
 import shutil
-from tests.tests_commons import import_commits
+from tests.tests_commons import import_commits, REPOS_PATHS, MOCK_REPO_PATH
 import pytest
 
-
 def test_obfuscation():
-  repos_path = ['tests/repo1', 'tests/repo2']
-  repos = [git.Repo(repo_path) for repo_path in repos_path]
-  mock_repo_path = 'tests/mockrepo'
-  shutil.rmtree(mock_repo_path, ignore_errors=True)
-  mock_repo = git.Repo.init(mock_repo_path)
+  repos = [git.Repo(repo_path) for repo_path in REPOS_PATHS]
+  shutil.rmtree(MOCK_REPO_PATH, ignore_errors=True)
+  mock_repo = git.Repo.init(MOCK_REPO_PATH)
   importer = Importer(repos, mock_repo)
   importer.set_keep_commit_messages(False)
   importer.import_repository()
 
   repos_commits = []
-  for repo_path in repos_path:
+  for repo_path in REPOS_PATHS:
     repos_commits += import_commits(repo_path)
   repos_commits.sort(key=lambda c: c[0])
 
-  mock_commits = import_commits(mock_repo_path)
+  mock_commits = import_commits(MOCK_REPO_PATH)
   mock_commits.sort(key=lambda c: c[0])
 
   # test that these are the same list
@@ -31,23 +28,20 @@ def test_obfuscation():
     assert repos_commits[i][1] != mock_commits[i][1]
 
 
-@pytest.mark.skip()
 def test_no_obfuscation():
-  repos_path = ['tests/repo1', 'tests/repo2']
-  repos = [git.Repo(repo_path) for repo_path in repos_path]
-  mock_repo_path = 'tests/mockrepo'
-  shutil.rmtree(mock_repo_path, ignore_errors=True)
-  mock_repo = git.Repo.init(mock_repo_path)
+  repos = [git.Repo(repo_path) for repo_path in REPOS_PATHS]
+  shutil.rmtree(MOCK_REPO_PATH, ignore_errors=True)
+  mock_repo = git.Repo.init(MOCK_REPO_PATH)
   importer = Importer(repos, mock_repo)
   importer.set_keep_commit_messages(True)
   importer.import_repository()
 
   repos_commits = []
-  for repo_path in repos_path:
+  for repo_path in REPOS_PATHS:
     repos_commits += import_commits(repo_path)
   repos_commits.sort(key=lambda c: c[0])
 
-  mock_commits = import_commits(mock_repo_path)
+  mock_commits = import_commits(MOCK_REPO_PATH)
   mock_commits.sort(key=lambda c: c[0])
 
   # test that these are the same list
