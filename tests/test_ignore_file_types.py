@@ -1,16 +1,14 @@
 import git
 from src import *
 import shutil
-from tests.tests_commons import import_commits
+from tests.tests_commons import REPOS_PATHS, MOCK_REPO_PATH
 import pytest
 
 
 def test_ignore_file_types():
-  repos_path = ['tests/repo1', 'tests/repo2']
-  repos = [git.Repo(repo_path) for repo_path in repos_path]
-  mock_repo_path = 'tests/mockrepo'
-  shutil.rmtree(mock_repo_path, ignore_errors=True)
-  mock_repo = git.Repo.init(mock_repo_path)
+  repos = [git.Repo(repo_path) for repo_path in REPOS_PATHS]
+  shutil.rmtree(MOCK_REPO_PATH, ignore_errors=True)
+  mock_repo = git.Repo.init(MOCK_REPO_PATH)
 
   ignored_filetypes = ['.csv', '.txt', '.pdf', '.xsl', '.sql']
 
