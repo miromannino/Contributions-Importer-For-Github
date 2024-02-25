@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-
 from .Generator import Generator
 from .JsGenerator import JsGenerator
 from .JavaGenerator import JavaGenerator
@@ -42,12 +40,12 @@ available_generators = {
     '.swift': SwiftGenerator,
     '.ts': TsGenerator,
     '.tsx': TsGenerator,
-    '.rb': RubyGenerator
+    '.rb': RubyGenerator,
     '.tf': TerraformGenerator
 }
 
 
-def apply(content, stats):
+def apply_generator(content, stats):
     for ext, num in stats.deletions.items():
         if ext in available_generators:
             gen = available_generators[ext]()
