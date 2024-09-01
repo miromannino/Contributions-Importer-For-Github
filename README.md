@@ -54,7 +54,7 @@ _Contributions Importer_ is for developers. No UI, nor simple command line tools
     repo = git.Repo("path/to/your/private/repo")
     mock_repo = git.Repo("path/to/your/mock/repo")
 
-    importer = Importer([repo], mock_repo)
+    importer = ImporterFromRepository([repo], mock_repo)
     importer.set_author('email@domain.com')
 
     importer.import_repository()

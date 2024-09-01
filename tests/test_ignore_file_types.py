@@ -12,7 +12,7 @@ def test_ignore_file_types():
 
   ignored_filetypes = ['.csv', '.txt', '.pdf', '.xsl', '.sql']
 
-  importer = Importer(repos, mock_repo)
+  importer = ImporterFromRepository(repos, mock_repo)
   importer.set_ignored_file_types(ignored_filetypes)
   importer.set_keep_commit_messages(True)
   importer.import_repository()
