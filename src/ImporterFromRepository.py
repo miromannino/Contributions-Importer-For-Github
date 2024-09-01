@@ -11,7 +11,7 @@ from .generators import apply_generator
 from .Stats import Stats
 
 
-class Importer:
+class ImporterFromRepository:
 
   def __init__(self, repos, mock_repo):
 
@@ -143,9 +143,8 @@ class Importer:
         self.committer.commit(break_committed_date, message)
         last_committed_date = break_committed_date
 
-  ''' iter commits coming from any branch'''
-
   def get_all_commits(self, ignore_before_date):
+    ''' iter commits coming from any branch'''
     commits = []
     s = set()  # to remove duplicated commits from other branches
     for repo in self.repos:
@@ -160,9 +159,8 @@ class Importer:
     commits.sort(key=lambda c: c.committed_date)
     return commits
 
-  ''' for a specific commit it gets all the changed files '''
-
   def get_changes(self, commit, stats):
+    ''' for a specific commit it gets all the changed files '''
     for k, v in commit.stats.files.items():
       ext = pathlib.Path(k).suffix
       if ext in self.ignored_file_types:
