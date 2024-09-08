@@ -84,9 +84,6 @@ class Stats:
   def __str__(self):
     """
     Returns a string representation of the Stats object.
-
-    Returns:
-      str: A string representation of the Stats object.
     """
     return 'insertions: ' + str(self.insertions) \
-         + ' deletions: ' + str(self.deletions)
+        + ' deletions: ' + str(self.deletions)
