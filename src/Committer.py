@@ -19,9 +19,8 @@ class Committer:
     shutil.copyfile(readme_path, mockrepo_readme_path)
     self.mock_repo.git.add(self.mock_repo_path + '/README.md')
 
-  ''' returns the last commit date in ms from epoch'''
-
   def get_last_commit_date(self):
+    ''' returns the last commit date in ms from epoch'''
     last_commit_date = 0
     for b in self.mock_repo.branches:
       for c in self.mock_repo.iter_commits(b.name):
@@ -29,14 +28,13 @@ class Committer:
           last_commit_date = c.committed_date
     return last_commit_date
 
-  ''' performs the commit. date is in seconds from epoch '''
-
-  def commit(self, date, message):
+  def commit(self, date: int, message: str):
+    ''' performs the commit. date is in seconds from epoch '''
     self.check_readme()
     for file in self.content.get_files():
       self.mock_repo.git.add(os.path.join(self.mock_repo_path, file))
     date_iso_format = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(date))
-    os.environ['GIT_AUTHOR_DATE'] =  date_iso_format
+    os.environ['GIT_AUTHOR_DATE'] = date_iso_format
     os.environ['GIT_COMMITTER_DATE'] = date_iso_format
     try:
       self.mock_repo.git.commit('-m', message, '--allow-empty')
