@@ -14,4 +14,4 @@ def pytest_sessionfinish(session, exitstatus):
   for repo in REPOS_PATHS:
     shutil.rmtree(repo, ignore_errors=True)
   shutil.rmtree('tests/mockrepo', ignore_errors=True)
-  shutil.rmtree('tests/mockrepoc', ignore_errors=True)
+  shutil.rmtree('tests/mockrepo_c', ignore_errors=True)
