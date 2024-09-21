@@ -1,9 +1,11 @@
 #!/usr/bin/python3
 
+from typing import Optional
 import git
 import time
 import os
 import shutil
+from .commons import Author
 
 
 class Committer:
@@ -28,12 +30,17 @@ class Committer:
           last_commit_date = c.committed_date
     return last_commit_date
 
-  def commit(self, date: int, message: str):
+  def commit(self, date: int, message: str, author: Optional[Author] = None):
     ''' performs the commit. date is in seconds from epoch '''
     self.check_readme()
     for file in self.content.get_files():
       self.mock_repo.git.add(os.path.join(self.mock_repo_path, file))
     date_iso_format = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(date))
+    if author:
+      if isinstance(author, list):
+        author = author[0]
+      os.environ["GIT_AUTHOR_NAME"] = author.name
+      os.environ["GIT_AUTHOR_EMAIL"] = author.email
     os.environ['GIT_AUTHOR_DATE'] = date_iso_format
     os.environ['GIT_COMMITTER_DATE'] = date_iso_format
     try:
