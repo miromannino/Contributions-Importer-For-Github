@@ -21,9 +21,7 @@ def extract_name_email(author_string):
   Returns:
     Author: An object with 'name' and 'email' fields, or None if the format is invalid.
   """
-  print("extract", author_string)
   match = re.match(r"^(.+?)\s*<([^<>]+)>$", author_string)
-  print(match)
   if match:
     name, email = match.groups()
     return Author(name=name.strip(), email=email.strip())
