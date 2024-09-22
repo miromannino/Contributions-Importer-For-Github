@@ -5,6 +5,8 @@ from random import random
 
 import time
 
+from src.commons import extract_name_email
+
 from .Committer import Committer
 from .Content import Content
 from .generators import apply_generator
@@ -79,22 +81,17 @@ class ImporterFromRepository:
       print('\nStarting')
       last_committed_date = 0
 
+    author_emails = ([a.email for a in self.author] if isinstance(self.author, list) else [
+        self.author.email]) if self.author else []
+
     for c in self.get_all_commits(last_committed_date + 1):
       print('Analyze commit at ' +
             time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(c.committed_date)))
       print('  msg:" ' + c.message + '"')
 
-      if self.author is not None:
-        if isinstance(self.author, list):
-          found = False
-          for a in self.author:
-            if c.author.email == a:
-              found = True
-        else:
-          found = c.author.email == self.author
-        if not found:
-          print('    Commit skipped because the author is: ' + c.author.email)
-          continue
+      if len(author_emails) > 0 and c.author.email not in author_emails:
+        print('    Commit skipped because the author is: ' + c.author.email)
+        continue
 
       committed_date = c.committed_date
       if self.commit_time_max_past > 0:
@@ -116,11 +113,9 @@ class ImporterFromRepository:
         self.content.save()
         break_committed_date = committed_date
         if broken_stats != stats:
-          if last_committed_date == 0:
-            max_past = self.changes_commits_max_time_backward
-          else:
-            max_past = min(break_committed_date - last_committed_date,
-                           self.changes_commits_max_time_backward)
+          max_past = self.changes_commits_max_time_backward
+          if last_committed_date != 0:
+            max_past = min(break_committed_date - last_committed_date, max_past)
           break_committed_date -= int(random() * (max_past / 3) + (max_past / 3 * 2))
         if time.strftime("%Y-%m-%d", time.localtime(last_committed_date)
                          ) == time.strftime("%Y-%m-%d", time.localtime(break_committed_date)):
@@ -140,7 +135,7 @@ class ImporterFromRepository:
         else:
           message = 'add code in files types: ' + ','.join(broken_stats.insertions.keys()) + \
               '\nremove code in files types: ' + ','.join(broken_stats.deletions.keys())
-        self.committer.commit(break_committed_date, message)
+        self.committer.commit(break_committed_date, message, self.author)
         last_committed_date = break_committed_date
 
   def get_all_commits(self, ignore_before_date):
@@ -197,8 +192,14 @@ class ImporterFromRepository:
   def set_start_from_last(self, value):
     self.start_from_last = value
 
-  def set_author(self, author):
-    self.author = author
+  def set_author(self, author: str | list):
+    """
+    Set author from a string "Some Name <some.email@example.com>" or a list of such strings.
+    """
+    if isinstance(author, list):
+      self.author = [extract_name_email(a) for a in author if extract_name_email(a) is not None]
+    else:
+      self.author = extract_name_email(author)
 
   def set_keep_commit_messages(self, value):
     self.keep_commit_messages = value
