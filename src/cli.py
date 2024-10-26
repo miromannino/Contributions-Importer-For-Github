@@ -1,81 +1,25 @@
 import argparse
+import sys
 import datetime
 import git
+from src.ImporterFromStats import ImporterFromStats
 from src.ImporterFromRepository import ImporterFromRepository
 
 
-def main():
-  parser = argparse.ArgumentParser(description="Contributions Importer for Git CLI")
+def handle_stats_action(args):
+  manager = ImporterFromStats(
+      mock_repo_path=args.repo,
+      generator_type=args.generator,
+      max_commits_per_day=args.max_commits_per_day,
+  )
+  manager.process_csv(args.csv)
 
-  parser.add_argument(
-      "repos_path",
-      nargs="+",
-      help="Paths to the repositories to import from."
-  )
 
-  parser.add_argument(
-      "mock_repo_path",
-      help="Path to the mock repository."
-  )
-
-  # Optional arguments
-  parser.add_argument(
-      "--author",
-      nargs="+",
-      help="Emails of the author to filter commits by."
-  )
-  parser.add_argument(
-      "--max-commits-per-day",
-      nargs=2,
-      type=int,
-      help="Max commits per day as a range (min max)."
-  )
-  parser.add_argument(
-      "--commit-max-amount-changes",
-      type=int,
-      help="Max number of changes allowed per commit."
-  )
-  parser.add_argument(
-      "--changes-commits-max-time-backward",
-      type=int,
-      help="Max time backward for splitting commits (in seconds)."
-  )
-  parser.add_argument(
-      "--ignored-file-types",
-      nargs="+",
-      help="List of file types to ignore (e.g., .csv, .txt)."
-  )
-  parser.add_argument(
-      "--ignore-before-date",
-      type=str,
-      help="Ignore commits before this date (YYYY-MM-DD)."
-  )
-  parser.add_argument(
-      "--collapse-multiple-changes",
-      action="store_true",
-      help="Collapse multiple changes into one."
-  )
-  parser.add_argument(
-      "--keep-commit-messages",
-      action="store_true",
-      help="Keep original commit messages."
-  )
-  parser.add_argument(
-      "--start-from-last",
-      action="store_true",
-      help="Start importing from the last commit."
-  )
-
-  args = parser.parse_args()
-
-  # Initialize repositories
-  repos = [git.Repo(repo_path) for repo_path in args.repos_path]
+def handle_repo_action(args):
+  repos = [git.Repo(repo_path) for repo_path in args.repos]
   mock_repo = git.Repo.init(args.mock_repo_path)
-
-  # Initialize Importer
   importer = ImporterFromRepository(repos, mock_repo)
 
-  # Apply settings
   if args.author:
     importer.set_author(args.author)
   if args.max_commits_per_day:
@@ -93,9 +37,112 @@ def main():
   importer.set_keep_commit_messages(args.keep_commit_messages)
   importer.set_start_from_last(args.start_from_last)
 
-  # Start import
   importer.import_repository()
 
 
+def main():
+  parser = argparse.ArgumentParser(description="Unified CLI for Contribution Importer")
+
+  subparsers = parser.add_subparsers(dest="action", required=True)
+
+  # region 'stats' action
+  stats_parser = subparsers.add_parser(
+    "stats",
+    help="Generate commits based on contribution stats."
+  )
+  stats_parser.add_argument(
+    "--csv",
+    required=True,
+    help="Path to the CSV file containing contributions data."
+  )
+  stats_parser.add_argument(
+    "--mock_repo_path",
+    required=True,
+    help="Path to the mock repository."
+  )
+  stats_parser.add_argument(
+    "--generator",
+    required=True,
+    help="File type for the generator (e.g., '.ts')."
+  )
+  stats_parser.add_argument(
+    "--max-commits-per-day",
+    type=int,
+    default=10,
+    help="Maximum number of commits per day (default: 10)."
+  )
+  # endregion
+
+  # region 'repo' action
+  repo_parser = subparsers.add_parser(
+    "repo",
+    help="Import contributions from repositories."
+  )
+  repo_parser.add_argument(
+    "--repos",
+    nargs="+",
+    help="Paths to the repositories to import from."
+  )
+  repo_parser.add_argument(
+    "--mock_repo_path",
+    help="Path to the mock repository."
+  )
+  repo_parser.add_argument(
+    "--author",
+    nargs="+",
+    help="Emails of the author to filter commits by."
+  )
+  repo_parser.add_argument(
+    "--max-commits-per-day",
+    nargs=2,
+    type=int,
+    help="Max commits per day as a range (min max)."
+  )
+  repo_parser.add_argument(
+    "--commit-max-amount-changes",
+    type=int,
+    help="Max number of changes allowed per commit."
+  )
+  repo_parser.add_argument(
+    "--changes-commits-max-time-backward",
+    type=int,
+    help="Max time backward for splitting commits (in seconds)."
+  )
+  repo_parser.add_argument(
+    "--ignored-file-types",
+    nargs="+",
+    help="List of file types to ignore (e.g., .csv, .txt)."
+  )
+  repo_parser.add_argument(
+    "--ignore-before-date",
+    type=str,
+    help="Ignore commits before this date (YYYY-MM-DD)."
+  )
+  repo_parser.add_argument(
+    "--collapse-multiple-changes",
+    action="store_true",
+    help="Collapse multiple changes into one."
+  )
+  repo_parser.add_argument(
+    "--keep-commit-messages",
+    action="store_true",
+    help="Keep original commit messages."
+  )
+  repo_parser.add_argument(
+    "--start-from-last",
+    action="store_true",
+    help="Start importing from the last commit."
+  )
+  # endregion
+
+  args = parser.parse_args()
+
+  if args.action == "stats":
+    handle_stats_action(args)
+  elif args.action == "repo":
+    handle_repo_action(args)
+
+
 if __name__ == "__main__":
+  print(sys.argv)
   main()
