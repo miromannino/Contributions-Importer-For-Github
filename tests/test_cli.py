@@ -1,6 +1,5 @@
 import subprocess
 import git
-import shutil
 import os
 import pytest
 from tests.tests_commons import REPOS_PATHS, MOCK_REPO_PATH
@@ -9,8 +8,9 @@ from tests.tests_commons import REPOS_PATHS, MOCK_REPO_PATH
 def test_cli_collapse_changes():
   cli_command_collapsed = [
       "python", "src/cli.py",
-      *REPOS_PATHS,
-      MOCK_REPO_PATH + "_c",
+      "repo",
+      "--repos", *REPOS_PATHS,
+      "--mock_repo", MOCK_REPO_PATH + "_c",
       "--author", "Test Name <test@example.com>",
       "--collapse-multiple-changes",
       "--keep-commit-messages"
@@ -18,8 +18,9 @@ def test_cli_collapse_changes():
 
   cli_command_non_collapsed = [
       "python", "src/cli.py",
-      *REPOS_PATHS,
-      MOCK_REPO_PATH,
+      "repo",
+      "--repos", *REPOS_PATHS,
+      "--mock_repo", MOCK_REPO_PATH,
       "--author", "Test Name <test@example.com>",
       "--keep-commit-messages"
   ]
@@ -53,8 +54,9 @@ def test_cli_collapse_changes():
 def test_cli_filter_by_author():
   cli_command = [
       "python", "src/cli.py",
-      *REPOS_PATHS,
-      MOCK_REPO_PATH,
+      "repo",
+      "--repos", *REPOS_PATHS,
+      "--mock_repo_path", MOCK_REPO_PATH,
       "--author", "Test Name <test@example.com>"
   ]
 
