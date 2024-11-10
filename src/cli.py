@@ -8,16 +8,20 @@ from src.ImporterFromRepository import ImporterFromRepository
 
 def handle_stats_action(args):
   manager = ImporterFromStats(
-      mock_repo_path=args.repo,
+      mock_repo_path=args.mock_repo,
       generator_type=args.generator,
       max_commits_per_day=args.max_commits_per_day,
   )
+
+  if args.author:
+    manager.set_author(args.author)
+
   manager.process_csv(args.csv)
 
 
 def handle_repo_action(args):
   repos = [git.Repo(repo_path) for repo_path in args.repos]
-  mock_repo = git.Repo.init(args.mock_repo_path)
+  mock_repo = git.Repo.init(args.mock_repo)
   importer = ImporterFromRepository(repos, mock_repo)
 
   if args.author:
@@ -56,7 +60,7 @@ def main():
     help="Path to the CSV file containing contributions data."
   )
   stats_parser.add_argument(
-    "--mock_repo_path",
+    "--mock_repo",
     required=True,
     help="Path to the mock repository."
   )
@@ -71,6 +75,11 @@ def main():
     default=10,
     help="Maximum number of commits per day (default: 10)."
   )
+  stats_parser.add_argument(
+    "--author",
+    nargs="+",
+    help="Emails of the author to filter commits by."
+  )
   # endregion
 
   # region 'repo' action
@@ -84,7 +93,7 @@ def main():
     help="Paths to the repositories to import from."
   )
   repo_parser.add_argument(
-    "--mock_repo_path",
+    "--mock_repo",
     help="Path to the mock repository."
   )
   repo_parser.add_argument(
