@@ -56,7 +56,7 @@ def test_cli_filter_by_author():
       "python", "src/cli.py",
       "repo",
       "--repos", *REPOS_PATHS,
-      "--mock_repo_path", MOCK_REPO_PATH,
+      "--mock_repo", MOCK_REPO_PATH,
       "--author", "Test Name <test@example.com>"
   ]
 
