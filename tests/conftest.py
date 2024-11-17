@@ -15,3 +15,4 @@ def pytest_sessionfinish(session, exitstatus):
     shutil.rmtree(repo, ignore_errors=True)
   shutil.rmtree('tests/mockrepo', ignore_errors=True)
   shutil.rmtree('tests/mockrepo_c', ignore_errors=True)
+  shutil.rmtree('tests/mockrepo_stats', ignore_errors=True)
