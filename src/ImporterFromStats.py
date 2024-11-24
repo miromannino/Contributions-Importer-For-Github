@@ -4,8 +4,7 @@ import git
 import time
 import random
 
-from .commons import is_valid_git_repo
-
+from .commons import extract_name_email
 from .Committer import Committer
 from .Content import Content
 from .generators import apply_generator
@@ -26,6 +25,7 @@ class ImporterFromStats:
           max_changes_per_file=DEFAULT_MAX_CHANGES_PER_FILE,
           max_commits_per_day=DEFAULT_MAX_COMMITS_PER_DAY,
           commit_time_range=DEFAULT_TIME_RANGE,
+          author=None,
           jitter=DEFAULT_JITTER):
     """
     :param mock_repo_path: Path to the mock repository.
@@ -33,17 +33,24 @@ class ImporterFromStats:
     :param max_changes_per_file: Number of max changes per file on each commit
     :param max_commits_per_day: max commits per day.
     """
-    if is_valid_git_repo(mock_repo_path):
-      self.repo = git.Repo(mock_repo_path)
-    else:
-      raise Exception(f"The path {mock_repo_path} is not a valid Git repository.")
+    self.repo = git.Repo.init(mock_repo_path)
     self.content = Content(self.repo.working_tree_dir)
-    self.committer = Committer(self.repo, self.content)
+    self.committer = Committer(mock_repo_path, self.content)
     self.generator_type = generator_type
     self.max_changes_per_file = max_changes_per_file
     self.max_commits_per_day = max_commits_per_day
     self.commit_time_range = commit_time_range
+    self.author = author
     self.jitter = jitter
+
+  def set_author(self, author: str | list):
+    """
+    Set author from a string "Some Name <some.email@example.com>" or a list of such strings.
+    """
+    if isinstance(author, list):
+      self.author = [extract_name_email(a) for a in author if extract_name_email(a) is not None]
+    else:
+      self.author = extract_name_email(author)
 
   def count_commits_for_date(self, date):
     """
@@ -134,7 +141,7 @@ class ImporterFromStats:
           f"Add code in files of type: {','.join(stats.insertions.keys())}\n"
           f"Remove code in files of type: {','.join(stats.deletions.keys())}"
       )
-      self.committer.commit(commit_date, message)
+      self.committer.commit(commit_date, message, self.author)
       print(
         f"Commit created for {current_time.strftime('%Y-%m-%d')} with message:\n{message}")
 
