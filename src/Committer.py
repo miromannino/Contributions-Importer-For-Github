@@ -10,16 +10,25 @@ from .commons import Author
 
 class Committer:
 
-  def __init__(self, mock_repo, content):
-    self.mock_repo = mock_repo
-    self.mock_repo_path = self.mock_repo.working_tree_dir
+  def __init__(self, mock_repo_path, content):
+    self.mock_repo_path = mock_repo_path
     self.content = content
+    self.mock_repo = self._initialize_repo()
 
-  def check_readme(self):
+  def _initialize_repo(self):
+    """Ensure the mock repository exists and is initialized."""
+    if not os.path.exists(self.mock_repo_path):
+      os.makedirs(self.mock_repo_path)
+    try:
+      return git.Repo(self.mock_repo_path)
+    except git.exc.InvalidGitRepositoryError:
+      return git.Repo.init(self.mock_repo_path)
+
+  def _check_readme(self):
     readme_path = os.path.dirname(__file__) + '/README.md'
     mockrepo_readme_path = self.mock_repo_path + '/README.md'
     shutil.copyfile(readme_path, mockrepo_readme_path)
-    self.mock_repo.git.add(self.mock_repo_path + '/README.md')
+    self.mock_repo.git.add('README.md')
 
   def get_last_commit_date(self):
     ''' returns the last commit date in ms from epoch'''
@@ -32,9 +41,9 @@ class Committer:
 
   def commit(self, date: int, message: str, author: Optional[Author] = None):
     ''' performs the commit. date is in seconds from epoch '''
-    self.check_readme()
+    self._check_readme()
     for file in self.content.get_files():
-      self.mock_repo.git.add(os.path.join(self.mock_repo_path, file))
+      self.mock_repo.git.add(file)
     date_iso_format = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(date))
     if author:
       if isinstance(author, list):
