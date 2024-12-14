@@ -3,16 +3,15 @@
 This tool helps users to import contributions to GitHub from private git repositories, or from public repositories that are not hosted in GitHub.
 
 <p style="margin: 20px" align="center">
-<img src="https://github.com/miromannino/contributions-importer-for-github/blob/resources/fig1.png" />
+<img src="https://github.com/miromannino/contributions-importer-for-github/blob/resources/fig1.png?raw=true" />
 </p>
-
 
 ## How it Works
 
 In its simplest case, this tool copies all commits from a source git repository to a mock git repository. Each copied commit will report the same commit date, but the original code is not copied, nor is the commit message.
 
 <p style="margin: 20px" align="center">
-<img src="https://github.com/miromannino/contributions-importer-for-github/blob/resources/fig0.png" />
+<img src="https://github.com/miromannino/contributions-importer-for-github/blob/resources/fig0.png?raw=true" />
 </p>
 
 _Contributions Importer_ will create instead mock code to report which languages have been used in the source repository.
@@ -31,129 +30,221 @@ In more extreme cases, some developers decided to boycott GitHub's lock-in syste
 
 Instead, [Contributions Importer for GitHub](https://github.com/miromannino/contributions-importer-for-github) aims to generate an overall realistic activity overview.
 
-## Other good tutorials about this project
+### Installation
+
+To install using `pip`:
+
+```bash
+pip install git-import-contributions
+```
+
+Using `brew`:
+
+```bash
+brew install git-import-contributions
+```
+
+### Usage
+
+The `git-import-contributions` CLI provides an interface for importing contributions into a mock Git repository using data from either a CSV file or other repositories. This tool is designed for developers and operates exclusively via the command line.
+
+The `git-import-contributions` CLI has two main modes of operation: **stats** and **repo**.
+
+#### General Syntax
+
+```bash
+git-import-contributions <action> [options]
+```
+
+### Actions
+
+#### 1. Stats Mode
+
+Generates commits in a mock repository based on a CSV file containing contribution statistics.
+
+**Command:**
+
+```bash
+git-import-contributions stats \
+    --csv <path-to-csv> \
+    --mock_repo <mock-repo-path> \
+    --generator <generator-type>
+```
+
+**Options:**
+
+- `--csv <path>`: Path to the CSV file containing contribution statistics.
+- `--mock_repo <path>`: Path to the mock Git repository.
+- `--generator <file-extension>`: Type of generator to use for file creation (e.g., `.ts`).
+
+**Other Optional Options:**
+
+- `--max-commits-per-day <number>`: Maximum number of commits per day (default: 10).
+- `--author <email>`: Filter commits by the specified author(s) (optional). Accepts multiple email addresses.
+
+**Example:**
+
+```bash
+git-import-contributions stats --csv data.csv --mock_repo mock-repo --generator .py --max-commits-per-day 5 --author "example@example.com"
+```
+
+#### 2. Repo Mode
+
+Imports contributions into a mock repository by analyzing one or more existing repositories.
+
+**Command:**
+
+```bash
+git-import-contributions repo \
+    --repos <repo-paths> \
+    --mock_repo <mock-repo-path>
+```
+
+**Options:**
+
+- `--repos <paths>`: Paths to the repositories to analyze (required). Accepts multiple paths.
+- `--mock_repo <path>`: Path to the mock Git repository (required).
+
+**Other Optional Options:**
+
+- `--author <email>`: Filter commits by the specified author(s) (optional). Accepts multiple email addresses.
+- `--max-commits-per-day <min max>`: Set a range for the number of commits per day (optional).
+- `--commit-max-amount-changes <number>`: Limit the number of changes per commit (optional).
+- `--changes-commits-max-time-backward <seconds>`: Maximum time backward for splitting large commits (optional).
+- `--ignored-file-types <types>`: List of file types to ignore (e.g., `.csv`, `.txt`) (optional).
+- `--ignore-before-date <YYYY-MM-DD>`: Ignore commits before this date (optional).
+- `--collapse-multiple-changes`: Collapse multiple changes into one per type of file (optional).
+- `--keep-commit-messages`: Keep original commit messages instead of using mocked ones (optional).
+- `--start-from-last`: Start importing from the last commit in the mock repository (optional).
+
+**Example:**
+
+```bash
+git-import-contributions repo --repos repo1 repo2 --mock_repo mock-repo --author "dev@example.com" --max-commits-per-day 5 10 --ignore-before-date 2020-01-01
+```
+
+### Advanced Features
+
+The `repo` mode supports additional options to control how contributions are imported:
+
+1. **Masking Commit Time**  
+   Commit times can be randomized using `--changes-commits-max-time-backward`.
+
+2. **Limiting Changes per Commit**  
+   Use `--commit-max-amount-changes` to set a cap on the number of changes in a single commit.
+
+3. **Incremental Imports**  
+   Use `--start-from-last` to import contributions incrementally starting from the most recent commit in the mock repository
+
+4. **Ignoring Commits Before a Date**  
+   Use `--ignore-before-date` to skip commits older than a specific date.
+
+### Help
+
+To view the full list of commands and options:
+
+```bash
+git-import-contributions --help
+```
+
+For specific actions:
+
+```bash
+git-import-contributions stats --help
+git-import-contributions repo --help
+```
+
+### Other good tutorials about this project
 
 - [How I Restored My Git Contributions](https://medium.com/@razan.joc/how-i-restored-my-git-contributions-7ddb27f06d4e) by Rajan Joshi
 - [Import Contributions from Bitbucket to GitHub](https://medium.com/@danielnmai/import-contributions-from-bitbucket-to-github-afd9160eaf6d) by Daniel Mai
 
-## How to Use
-
-Make sure you have first of all `pipenv` installed. Afterward, install all the dependencies and spawn a shell in a virtual environment in the following way:
-
-```bash
-cd contributions-importer-for-github
-pipenv install
-pipenv shell
-```
-
-_Contributions Importer_ is for developers. No UI, nor simple command line tools. This tool can be used by writing a simple Python script:
-
-    import git
-    from git_contributions_importer import *
-
-    repo = git.Repo("path/to/your/private/repo")
-    mock_repo = git.Repo("path/to/your/mock/repo")
-
-    importer = ImporterFromRepository([repo], mock_repo)
-    importer.set_author('email@domain.com')
-
-    importer.import_repository()
-
-If the mock repository folder could be an empty git repository as well as a repository that has already other commits.
-
-
-## Protecting your private repository
-
-_Contributions Importer_ has a few features to protect your private code.
-
-### Masking the real commit time  
-
-    importer.set_commit_time_max_past(value)
-
-Maximum amount in the past that the commit can be shifted for. The values are in seconds.
-
-### Maximum number of changes per file  
-
-    importer.set_max_changes_per_file(max_amount)
-
-Maximum number of changes per file. By default for each change (line of code changed, added or removed) a line of mock code is changed. Instead, `set_max_changes_per_file()` would limit the number of generated mock codes for extreme cases where too many lines of codes are changed (e.g. SQL database dump). The default is 5.
-
-### Collapse multiple changes into one
-
-    importer.set_collapse_multiple_changes_to_one(true)
-
-It allows the importer to collapse several lines of changes to just one per commit, and one per type of file. This allows for avoiding excessive growth of file size. The default is set to True.
-
-### Maximum number of changes per commit  
-
-    importer.set_commit_max_amount_changes(max_amount)
-
-The maximum number of changes (line of code changed, added or removed) that a commit can have. Commits with many changes are disadvantaged in GitHub. Most likely these large commits could have been split into many smaller ones. GitHub users who know how contributions are calculated are prone to do several smaller commits instead, while in a private repository, this could not be necessary, especially in smaller teams. The default is -1, and it is to indicate no limits.
-
-### Maximum time backward
-
-    importer.set_changes_commits_max_time_backward(max_amount)
-
-If `set_commit_max_amount_changes()` has been used, a commit could be split. In that case, this value decides how long these commits could go in the past. The idea is that a big commit is likely composed of several features that could have been committed in different commits. These changes would have been some time before the actual real commit. The time is in seconds, the default is 4 days (good in simpler projects where there is a "backup" commit every week).
-
-### Ignore Before Date
-
-    importer.set_ignore_before_date(value)
-
-Importer will ignore all commits before this date (number of seconds from 1970-01-01 UTC)
-
-### Just last commit
-
-    importer.set_start_from_last(false)
-
-The importer will fetch the last committed date from mock_repo and will ignore all commits before this date. If `ignore_before_date` is set all commits before the most recent date between the last commit and `ignore_before_date` will be ignored. Useful to do incremental imports.
-
-### Set Author
-
-    importer.set_author(email)
-
-Author to analyze. If not set, commits from any author will be imported. The author is given as email. This could also be an array in case the author uses different emails.
-
-### Keep commit messages
-
-    importer.set_keep_commit_messages(value)
-
-The importer will maintain the original commit message instead of the mocked one. By default, the flag is set to False
-
 ## Contributing
 
+We welcome contributions from the community. Please fork the repository, create a new branch, and submit a pull request with your changes.
+
+Ensure all tests pass and update documentation as needed.
+
 ### Code style
+
 Regarding code styles like indentation and whitespace, **follow the conventions you see used in the source already.**
+
+A pep8 auto formatter is used with the following settings:
+
+```ini
+[pep8]
+indent-size = 2
+ignore = E121
+max-line-length = 100
+aggressive = true
+```
+
+It can also be configured in VSCode `settings.json` with:
+
+```json
+"autopep8.args": [
+    "--indent-size=2",
+    "--ignore=E121",
+    "--max-line-length=100",
+    "--aggressive"
+]
+```
 
 ### Submitting pull requests
 
-- Create a new branch, please don't work in your `master` branch directly.
-- Add failing tests for the change you want to make.
-- Fix stuff.
-- Ensure that the written tests don't fail anymore, as well as the other tests.
-- Update the documentation to reflect any changes.
-- Push to your fork and submit a pull request.
+- Create a new branch; avoid working directly in the `master` branch.
+- Write failing tests for the changes you plan to implement.
+- Make the necessary changes to fix the issues.
+- Ensure all tests, including the new ones, pass successfully.
+- Update the documentation to reflect any modifications.
+- Push your changes to your fork and submit a pull request.
 
-## License
+### Use from source
 
-MIT License
+Make sure you have first of all `pipenv` installed and install all required dependencies:
 
-Copyright (c) 2018 Miro Mannino
+```bash
+./scripts/install-dependencies.sh 
+```
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+You can then use the CLI with:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+```bash
+./scripts/cli.sh --help   
+```
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+### Tests
+
+In order to run tests:
+
+Make sure you have first of all `pipenv` installed and install all required dependencies:
+
+```bash
+./scripts/install-dependencies.sh 
+```
+
+Start tests with:
+
+```bash
+./scripts/run-tests.sh
+```
+
+### Install from source
+
+To install from source using `pip`:
+
+```bash
+pip install .
+```
+
+To uninstall
+
+```bash
+pip uninstall git-import-contributions
+```
+
+To test Brew installation locally:
+
+```bash
+brew install --build-from-source ./git-import-contributions.rb
+```
