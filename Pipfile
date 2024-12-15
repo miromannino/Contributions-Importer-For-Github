@@ -8,6 +8,9 @@ gitpython = "==3.1.42"
 
 [dev-packages]
 pytest = "*"
+setuptools = "*"
+wheel = "*"
+twine = "*"
 
 [requires]
 python_version = "3"
