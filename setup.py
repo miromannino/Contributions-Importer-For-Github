@@ -1,5 +1,7 @@
 from setuptools import setup, find_packages
 
+with open("README.md", "r", encoding="utf-8") as fh:
+  long_description = fh.read()
 
 setup(
     name='git-import-contributions',
@@ -15,6 +17,8 @@ setup(
         ],
     },
     author='Miro Mannino',
-    description='A brief description of your script.',
+    description='Contribution Importer',
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     url='https://github.com/miromannino/Contributions-Importer-For-Github',
 )
