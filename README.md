@@ -1,5 +1,7 @@
 # Contributions Importer for GitHub
 
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/miromannino/Contributions-Importer-For-Github/blob/main/LICENSE) [![pypi version](https://img.shields.io/pypi/v/git-import-contributions.svg)](https://pypi.org/project/git-import-contributions/) [![Build and Tests](https://github.com/miromannino/Contributions-Importer-For-Github/actions/workflows/tests.yaml/badge.svg)](https://github.com/miromannino/Contributions-Importer-For-Github/actions/workflows/tests.yaml)
+
 This tool helps users to import contributions to GitHub from private git repositories, or from public repositories that are not hosted in GitHub.
 
 <p style="margin: 20px" align="center">
