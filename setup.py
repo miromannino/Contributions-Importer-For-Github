@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name='git-import-contributions',
-    version='2.0.0',
+    version='2.0.0-rc1',
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
@@ -17,7 +17,7 @@ setup(
         ],
     },
     author='Miro Mannino',
-    description='Contribution Importer',
+    description='This tool helps users to import contributions to GitHub from private git repositories, or from public repositories that are not hosted in GitHub',
     long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://github.com/miromannino/Contributions-Importer-For-Github',
