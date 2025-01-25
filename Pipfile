@@ -9,6 +9,7 @@ gitpython = "==3.1.42"
 [dev-packages]
 pytest = "*"
 setuptools = "*"
+importlib-metadata = "*"
 wheel = "*"
 twine = "*"
 
