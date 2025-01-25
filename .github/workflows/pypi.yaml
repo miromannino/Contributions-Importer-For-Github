@@ -1,9 +1,6 @@
 name: Publish Python Package
 
 on:
-  push:
-    branches:
-      - main
   release:
     types:
       - published
@@ -32,22 +29,13 @@ jobs:
           rm -rf dist build *.egg-info
           pipenv run python setup.py sdist bdist_wheel
 
-      - name: Publish to TestPyPI
-        if: github.event_name == 'push'
+      - name: Publish to PyPI
         env:
           TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
         run: |
-          pipenv run twine upload --repository testpypi dist/*
-
-      # - name: Publish to PyPI
-      #   if: github.event_name == 'release'
-      #   env:
-      #     TWINE_USERNAME: __token__
-      #     TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-      #   run: |
-      #     pipenv run twine upload dist/*
+          pipenv run twine upload dist/*
 
       - name: Test package installation
         run: |
-          pipenv run pip install --index-url https://test.pypi.org/simple/ --no-deps git-import-contributions
+          pipenv run pip install --no-deps git-import-contributions
