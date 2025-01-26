@@ -9,6 +9,10 @@ jobs:
   publish:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      id-token: write
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -30,11 +34,7 @@ jobs:
           pipenv run python setup.py sdist bdist_wheel
 
       - name: Publish to PyPI
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-        run: |
-          pipenv run twine upload dist/*
+        uses: pypa/gh-action-pypi-publish@release/v1
 
       - name: Test package installation
         run: |
