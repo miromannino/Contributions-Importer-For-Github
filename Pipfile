@@ -12,6 +12,7 @@ setuptools = "*"
 importlib-metadata = "*"
 wheel = "*"
 twine = "*"
+black = "*"
 
 [requires]
 python_version = "3"
