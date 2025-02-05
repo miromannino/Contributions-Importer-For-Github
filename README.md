@@ -87,7 +87,12 @@ git-import-contributions stats \
 **Example:**
 
 ```bash
-git-import-contributions stats --csv data.csv --mock_repo mock-repo --generator .py --max-commits-per-day 5 --author "example@example.com"
+git-import-contributions stats \
+    --csv data.csv \
+    --mock_repo mock-repo \
+    --generator .py \
+    --max-commits-per-day 5 \
+    --author "example@example.com"
 ```
 
 #### 2. Repo Mode
@@ -122,7 +127,12 @@ git-import-contributions repo \
 **Example:**
 
 ```bash
-git-import-contributions repo --repos repo1 repo2 --mock_repo mock-repo --author "dev@example.com" --max-commits-per-day 5 10 --ignore-before-date 2020-01-01
+git-import-contributions repo \
+    --repos repo1 repo2 \
+    --mock_repo mock-repo \
+    --author "dev@example.com" \
+    --max-commits-per-day 5 10 \
+    --ignore-before-date 2020-01-01
 ```
 
 ### Advanced Features
