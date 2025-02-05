@@ -86,6 +86,18 @@ git-import-contributions stats \
 
 **Example:**
 
+The contributions are saved in a CSV file `data.csv` as the following:
+
+```csv
+contributions,date
+4,2024-08-05
+2,2024-08-09
+0,2024-08-10
+0,2024-08-11
+```
+
+Let's import:
+
 ```bash
 git-import-contributions stats \
     --csv data.csv \
@@ -125,6 +137,9 @@ git-import-contributions repo \
 - `--start-from-last`: Start importing from the last commit in the mock repository (optional).
 
 **Example:**
+
+The repositories to analyze are in folder `repo1` and `repo2`.
+The mock repo is instead in the `mock-repo` folder.
 
 ```bash
 git-import-contributions repo \
