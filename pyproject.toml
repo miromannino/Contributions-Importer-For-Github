@@ -1,7 +1,7 @@
 [tool.black]
 line-length = 100
 target-version = ['py311']
-include = '\.pyi?$'
+include = '\.py?$'
 exclude = '''
 (
     /(
@@ -9,6 +9,7 @@ exclude = '''
         | \.venv
         | build
         | dist
+        | __pycache__
     )/
 )
 '''
