@@ -1,11 +1,12 @@
 import csv
 import datetime as dt
-import git
-import time
 import random
+import time
 
-from .commons import extract_name_email
+import git
+
 from .Committer import Committer
+from .commons import extract_name_email
 from .Content import Content
 from .generators import apply_generator
 from .Stats import Stats
@@ -82,7 +83,7 @@ class ImporterFromStats:
         Process a CSV file and create commits based on the contributions data.
         :param file_path: Path to the CSV file.
         """
-        with open(file_path, "r") as file:
+        with open(file_path) as file:
             reader = csv.reader(file)
             next(reader)  # Skip the header
 

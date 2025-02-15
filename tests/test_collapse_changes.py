@@ -1,9 +1,12 @@
 import os
 import shutil
+
 import git
 import pytest
+
 from src.ImporterFromRepository import ImporterFromRepository
-from tests.tests_commons import REPOS_PATHS, MOCK_REPO_PATH
+
+from .tests_commons import MOCK_REPO_PATH, REPOS_PATHS
 
 
 @pytest.fixture
@@ -53,8 +56,8 @@ def test_collapse_changes_smaller_filesizes(setup_mock_repos):
     # Compare line counts for each file
     for file in files_collapsed:
         assert file in files_non_collapsed
-        with open(os.path.join(MOCK_REPO_PATH + "_c", file), "r") as collapsed_file:
+        with open(os.path.join(MOCK_REPO_PATH + "_c", file)) as collapsed_file:
             lines_collapsed = len(collapsed_file.readlines())
-        with open(os.path.join(MOCK_REPO_PATH, file), "r") as non_collapsed_file:
+        with open(os.path.join(MOCK_REPO_PATH, file)) as non_collapsed_file:
             lines_non_collapsed = len(non_collapsed_file.readlines())
         assert lines_collapsed < lines_non_collapsed

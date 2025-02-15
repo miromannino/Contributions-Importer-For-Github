@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 
 import pathlib
-from random import random
-
 import time
+from random import random
 
 from src.commons import extract_name_email
 

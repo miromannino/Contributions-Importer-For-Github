@@ -1,6 +1,7 @@
-from collections import namedtuple
-import git
 import re
+from collections import namedtuple
+
+import git
 
 Author = namedtuple("Author", ["name", "email"])
 

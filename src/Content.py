@@ -2,6 +2,7 @@
 
 import os
 import pathlib
+
 from .generators import available_generators
 
 
@@ -16,7 +17,7 @@ class Content:
     def loadFile(self, ext, path):
         if ext not in available_generators:
             return
-        with open(path, "r") as t:
+        with open(path) as t:
             lines = []
             for line in t:
                 lines.append(line.replace("\n", ""))

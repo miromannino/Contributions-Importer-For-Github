@@ -1,8 +1,11 @@
-import git
-from src import *
 import shutil
-from tests.tests_commons import import_commits, REPOS_PATHS, MOCK_REPO_PATH
+
+import git
 import pytest
+
+from src import *
+
+from .tests_commons import MOCK_REPO_PATH, REPOS_PATHS, import_commits
 
 
 def test_max_changes_per_file():
@@ -36,9 +39,9 @@ def test_max_changes_per_file():
         assert file in files_non_collapsed
         lines_of_code_collapsed = 0
         lines_of_code_non_collapsed = 0
-        with open(os.path.join(MOCK_REPO_PATH + "_c", file), "r") as f:
+        with open(os.path.join(MOCK_REPO_PATH + "_c", file)) as f:
             lines_of_code_collapsed = len(f.readlines())
-        with open(os.path.join(MOCK_REPO_PATH, file), "r") as f:
+        with open(os.path.join(MOCK_REPO_PATH, file)) as f:
             lines_of_code_non_collapsed = len(f.readlines())
         print(
             "Checking",

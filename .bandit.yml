@@ -1,0 +1,9 @@
+exclude_dirs:
+  - tests
+  - __pycache__
+  - build
+  - dist
+
+skips:
+  - B311
+  - B608
