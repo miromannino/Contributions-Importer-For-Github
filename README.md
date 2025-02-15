@@ -2,7 +2,6 @@
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/miromannino/Contributions-Importer-For-Github/blob/main/LICENSE) [![pypi version](https://img.shields.io/pypi/v/git-import-contributions.svg)](https://pypi.org/project/git-import-contributions/) [![Build and Tests](https://github.com/miromannino/Contributions-Importer-For-Github/actions/workflows/tests.yaml/badge.svg)](https://github.com/miromannino/Contributions-Importer-For-Github/actions/workflows/tests.yaml) [![Static Code Analysis](https://github.com/miromannino/Contributions-Importer-For-Github/actions/workflows/static-analysis.yaml/badge.svg)](https://github.com/miromannino/Contributions-Importer-For-Github/actions/workflows/static-analysis.yaml) [![Code Security Analysis](https://github.com/miromannino/Contributions-Importer-For-Github/actions/workflows/security.yaml/badge.svg)](https://github.com/miromannino/Contributions-Importer-For-Github/actions/workflows/security.yaml)
 
-
 This tool helps users to import contributions to GitHub from private git repositories, or from public repositories that are not hosted in GitHub.
 
 <p style="margin: 20px" align="center">
@@ -44,6 +43,7 @@ pip install git-import-contributions
 Using `brew`:
 
 ```bash
+brew tap miromannino/tap
 brew install git-import-contributions
 ```
 
@@ -213,7 +213,6 @@ Regarding code styles like indentation and whitespace, **follow the conventions 
 
 The project uses `black` as auto formatter using the settings in `pyproject.toml`.
 
-
 ### Submitting pull requests
 
 - Create a new branch; avoid working directly in the `master` branch.
@@ -265,10 +264,4 @@ To uninstall
 
 ```bash
 pip uninstall git-import-contributions
-```
-
-To test Brew installation locally:
-
-```bash
-brew install --build-from-source ./git-import-contributions.rb
 ```
