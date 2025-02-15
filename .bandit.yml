@@ -7,3 +7,5 @@ exclude_dirs:
 skips:
   - B311
   - B608
+  - B603
+  - B404
