@@ -1,11 +1,35 @@
+import os
+import shutil
+import subprocess
+
 from setuptools import find_packages, setup
+
+
+def get_version_from_git():
+    try:
+        git_path = shutil.which("git")
+        if git_path is None:
+            raise ValueError("Git is not installed")
+
+        result = subprocess.run(
+            [git_path, "describe", "--tags", "--abbrev=0"],
+            text=True,
+            capture_output=True,
+            check=True,
+        )
+        return result.stdout.strip()
+    except Exception:
+        return "0.0.0"
+
+
+version = os.getenv("RELEASE_VERSION", get_version_from_git())
 
 with open("README.md", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
     name="git-import-contributions",
-    version="2.0.1",
+    version=version,
     packages=find_packages(),
     include_package_data=True,
     install_requires=["gitpython"],
