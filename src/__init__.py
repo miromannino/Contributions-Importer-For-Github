@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from .Content import *
-from .ImporterFromRepository import *
 from .Committer import *
+from .Content import *
 from .generators import *
+from .ImporterFromRepository import *

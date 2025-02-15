@@ -1,0 +1,16 @@
+[tool.black]
+line-length = 100
+target-version = ['py311']
+skips = ['B311']
+include = '\.py?$'
+exclude = '''
+(
+    /(
+        \.git
+        | \.venv
+        | build
+        | dist
+        | __pycache__
+    )/
+)
+'''

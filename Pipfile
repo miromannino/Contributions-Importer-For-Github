@@ -12,6 +12,8 @@ setuptools = "*"
 importlib-metadata = "*"
 wheel = "*"
 twine = "*"
+black = "*"
+pre-commit = "*"
 
 [requires]
 python_version = "3"

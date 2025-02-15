@@ -1,47 +1,47 @@
-from .Generator import Generator
-from .JsGenerator import JsGenerator
-from .JavaGenerator import JavaGenerator
-from .CssGenerator import CssGenerator
-from .CppGenerator import CppGenerator
+from .BashGenerator import BashGenerator
 from .CGenerator import CGenerator
-from .PyGenerator import PyGenerator
-from .RubyGenerator import RubyGenerator
+from .CppGenerator import CppGenerator
+from .CssGenerator import CssGenerator
+from .Generator import Generator
+from .HtmlGenerator import HtmlGenerator
+from .JavaGenerator import JavaGenerator
+from .JsGenerator import JsGenerator
 from .JsonGenerator import JsonGenerator
 from .KotlinGenerator import KotlinGenerator
 from .LuaGenerator import LuaGenerator
 from .PhpGenerator import PhpGenerator
-from .HtmlGenerator import HtmlGenerator
-from .BashGenerator import BashGenerator
-from .SqlGenerator import SqlGenerator
+from .PyGenerator import PyGenerator
+from .RubyGenerator import RubyGenerator
 from .ScalaGenerator import ScalaGenerator
+from .SqlGenerator import SqlGenerator
 from .SwiftGenerator import SwiftGenerator
 from .TerraformGenerator import TerraformGenerator
 from .TsGenerator import TsGenerator
 
 available_generators = {
-    '.md': Generator,
-    '.txt': Generator,
-    '.tex': Generator,
-    '.js': JsGenerator,
-    '.java': JavaGenerator,
-    '.css': CssGenerator,
-    '.scss': CssGenerator,
-    '.cpp': CppGenerator,
-    '.c': CGenerator,
-    '.py': PyGenerator,
-    '.json': JsonGenerator,
-    '.kt': KotlinGenerator,
-    '.lua': LuaGenerator,
-    '.php': PhpGenerator,
-    '.html': HtmlGenerator,
-    '.sh': BashGenerator,
-    '.sql': SqlGenerator,
-    '.scala': ScalaGenerator,
-    '.swift': SwiftGenerator,
-    '.ts': TsGenerator,
-    '.tsx': TsGenerator,
-    '.rb': RubyGenerator,
-    '.tf': TerraformGenerator
+    ".md": Generator,
+    ".txt": Generator,
+    ".tex": Generator,
+    ".js": JsGenerator,
+    ".java": JavaGenerator,
+    ".css": CssGenerator,
+    ".scss": CssGenerator,
+    ".cpp": CppGenerator,
+    ".c": CGenerator,
+    ".py": PyGenerator,
+    ".json": JsonGenerator,
+    ".kt": KotlinGenerator,
+    ".lua": LuaGenerator,
+    ".php": PhpGenerator,
+    ".html": HtmlGenerator,
+    ".sh": BashGenerator,
+    ".sql": SqlGenerator,
+    ".scala": ScalaGenerator,
+    ".swift": SwiftGenerator,
+    ".ts": TsGenerator,
+    ".tsx": TsGenerator,
+    ".rb": RubyGenerator,
+    ".tf": TerraformGenerator,
 }
 
 

@@ -1,6 +1,7 @@
 # Contributions Importer for GitHub
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/miromannino/Contributions-Importer-For-Github/blob/main/LICENSE) [![pypi version](https://img.shields.io/pypi/v/git-import-contributions.svg)](https://pypi.org/project/git-import-contributions/) [![Build and Tests](https://github.com/miromannino/Contributions-Importer-For-Github/actions/workflows/tests.yaml/badge.svg)](https://github.com/miromannino/Contributions-Importer-For-Github/actions/workflows/tests.yaml)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/miromannino/Contributions-Importer-For-Github/blob/main/LICENSE) [![pypi version](https://img.shields.io/pypi/v/git-import-contributions.svg)](https://pypi.org/project/git-import-contributions/) [![Build and Tests](https://github.com/miromannino/Contributions-Importer-For-Github/actions/workflows/tests.yaml/badge.svg)](https://github.com/miromannino/Contributions-Importer-For-Github/actions/workflows/tests.yaml) [![Static Code Analysis](https://github.com/miromannino/Contributions-Importer-For-Github/actions/workflows/static-analysis.yaml/badge.svg)](https://github.com/miromannino/Contributions-Importer-For-Github/actions/workflows/static-analysis.yaml) [![Code Security Analysis](https://github.com/miromannino/Contributions-Importer-For-Github/actions/workflows/security.yaml/badge.svg)](https://github.com/miromannino/Contributions-Importer-For-Github/actions/workflows/security.yaml)
+
 
 This tool helps users to import contributions to GitHub from private git repositories, or from public repositories that are not hosted in GitHub.
 
@@ -154,16 +155,16 @@ git-import-contributions repo \
 
 The `repo` mode supports additional options to control how contributions are imported:
 
-1. **Masking Commit Time**  
+1. **Masking Commit Time**
    Commit times can be randomized using `--changes-commits-max-time-backward`.
 
-2. **Limiting Changes per Commit**  
+2. **Limiting Changes per Commit**
    Use `--commit-max-amount-changes` to set a cap on the number of changes in a single commit.
 
-3. **Incremental Imports**  
+3. **Incremental Imports**
    Use `--start-from-last` to import contributions incrementally starting from the most recent commit in the mock repository
 
-4. **Ignoring Commits Before a Date**  
+4. **Ignoring Commits Before a Date**
    Use `--ignore-before-date` to skip commits older than a specific date.
 
 ### Help
@@ -192,30 +193,26 @@ We welcome contributions from the community. Please fork the repository, create 
 
 Ensure all tests pass and update documentation as needed.
 
+### Install dev dependencies
+
+To install dev dependencies
+
+```bash
+pipenv install --dev
+```
+
+Install the pre-commit scripts with:
+
+```bash
+pipenv run pre-commit install
+```
+
 ### Code style
 
 Regarding code styles like indentation and whitespace, **follow the conventions you see used in the source already.**
 
-A pep8 auto formatter is used with the following settings:
+The project uses `black` as auto formatter using the settings in `pyproject.toml`.
 
-```ini
-[pep8]
-indent-size = 2
-ignore = E121
-max-line-length = 100
-aggressive = true
-```
-
-It can also be configured in VSCode `settings.json` with:
-
-```json
-"autopep8.args": [
-    "--indent-size=2",
-    "--ignore=E121",
-    "--max-line-length=100",
-    "--aggressive"
-]
-```
 
 ### Submitting pull requests
 
@@ -231,13 +228,13 @@ It can also be configured in VSCode `settings.json` with:
 Make sure you have first of all `pipenv` installed and install all required dependencies:
 
 ```bash
-./scripts/install-dependencies.sh 
+./scripts/install-dependencies.sh
 ```
 
 You can then use the CLI with:
 
 ```bash
-./scripts/cli.sh --help   
+./scripts/cli.sh --help
 ```
 
 ### Tests
@@ -247,7 +244,7 @@ In order to run tests:
 Make sure you have first of all `pipenv` installed and install all required dependencies:
 
 ```bash
-./scripts/install-dependencies.sh 
+./scripts/install-dependencies.sh
 ```
 
 Start tests with:

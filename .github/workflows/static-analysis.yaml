@@ -1,0 +1,48 @@
+name: Static Code Analysis
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  formatting:
+    name: Formatting, linting, and types checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set Up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.11"
+
+      - name: Cache Pipenv Virtualenv
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pipenv
+          key: ${{ runner.os }}-pipenv-${{ hashFiles('Pipfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pipenv-
+
+      - name: Install Dependencies
+        run: |
+          pip install pipenv
+          pipenv install --dev
+          pip install pre-commit
+
+      - name: Run Black and isort
+        run: pipenv run pre-commit run black --all-files && pipenv run pre-commit run isort --all-files
+
+      - name: Run Flake8
+        run: pipenv run pre-commit run flake8 --all-files
+
+      - name: Run Mypy
+        run: pipenv run pre-commit run mypy --all-files
+
+      - name: Run PyUpgrade
+        run: pipenv run pre-commit run pyupgrade
