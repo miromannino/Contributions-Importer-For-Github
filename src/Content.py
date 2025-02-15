@@ -18,8 +18,8 @@ class Content:
             return
         with open(path, "r") as t:
             lines = []
-            for l in t:
-                lines.append(l.replace("\n", ""))
+            for line in t:
+                lines.append(line.replace("\n", ""))
             self.contents[ext] = lines
 
     def load(self):
@@ -32,8 +32,8 @@ class Content:
         for k, v in self.contents.items():
             full_path = os.path.join(self.folder_path, Content.FILENAME + k)
             with open(full_path, "w") as f:
-                for l in v:
-                    f.write(l)
+                for line in v:
+                    f.write(line)
                     f.write("\n")
 
     def get_files(self):

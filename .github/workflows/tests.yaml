@@ -25,7 +25,7 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
-        
+
       - name: Set up Git
         run: |
           git config --global user.name "GitHub Actions"
@@ -38,5 +38,5 @@ jobs:
 
       - name: Run tests
         run: |
-          export PYTHONPATH=".:$PYTHONPATH" 
+          export PYTHONPATH=".:$PYTHONPATH"
           pipenv run pytest
