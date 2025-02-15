@@ -1,5 +1,6 @@
-from git import Repo
 import time
+
+from git import Repo
 
 REPOS_PATHS = ["tests/repo1", "tests/repo2"]
 MOCK_REPO_PATH = "tests/mockrepo"

@@ -1,0 +1,39 @@
+name: Security Checks
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  security:
+    name: Bandit Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set Up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.11"
+
+      - name: Cache Pipenv Virtualenv
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pipenv
+          key: ${{ runner.os }}-pipenv-${{ hashFiles('Pipfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pipenv-
+
+      - name: Install Dependencies
+        run: |
+          pip install pipenv
+          pipenv install --dev
+          pip install pre-commit
+
+      - name: Run Bandit
+        run: pipenv run pre-commit run bandit --all-files

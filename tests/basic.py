@@ -1,5 +1,7 @@
 import sys
+
 import git
+
 from src import *
 
 repos_path = [
@@ -19,7 +21,7 @@ importer.set_author(["your.email@domain.com", "your.other.email@domain.com"])
 importer.set_commit_max_amount_changes(15)
 importer.set_changes_commits_max_time_backward(60 * 60 * 24 * 30)
 importer.set_max_changes_per_file(60)
-importer.ignore_file_types([".csv", ".txt", ".pdf", ".xsl", ".sql"])
+importer.set_ignored_file_types([".csv", ".txt", ".pdf", ".xsl", ".sql"])
 importer.set_collapse_multiple_changes_to_one(True)
 importer.set_keep_commit_messages(True)
 importer.import_repository()

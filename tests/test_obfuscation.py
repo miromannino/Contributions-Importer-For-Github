@@ -1,9 +1,12 @@
-import sys
-import git
-from src import *
 import shutil
-from tests.tests_commons import import_commits, REPOS_PATHS, MOCK_REPO_PATH
+import sys
+
+import git
 import pytest
+
+from src import *
+
+from .tests_commons import MOCK_REPO_PATH, REPOS_PATHS, import_commits
 
 
 def test_obfuscation():

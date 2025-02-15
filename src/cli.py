@@ -1,9 +1,11 @@
 import argparse
-import sys
 import datetime
+import sys
+
 import git
-from src.ImporterFromStats import ImporterFromStats
+
 from src.ImporterFromRepository import ImporterFromRepository
+from src.ImporterFromStats import ImporterFromStats
 
 
 def handle_stats_action(args):

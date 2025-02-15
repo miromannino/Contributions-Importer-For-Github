@@ -1,6 +1,7 @@
-import tarfile
 import shutil
-from tests_commons import REPOS_PATHS
+import tarfile
+
+from .tests_commons import REPOS_PATHS
 
 
 def pytest_sessionstart(session):

@@ -1,9 +1,11 @@
-import subprocess
-import git
-import os
-import pytest
 import csv
-from tests.tests_commons import MOCK_REPO_PATH
+import os
+import subprocess
+
+import git
+import pytest
+
+from .tests_commons import MOCK_REPO_PATH
 
 MOCK_REPO_PATH_STATS = f"{MOCK_REPO_PATH}_stats"
 
@@ -26,7 +28,7 @@ def test_cli_stats():
     subprocess.run(cli_command, check=True)
 
     # Extract the expected dates from the CSV file
-    unique_csv_dates = set([])
+    unique_csv_dates = set()
     expanded_csv_dates = []
     with open("tests/stats_1.csv", newline="") as csvfile:
         reader = csv.DictReader(csvfile)
@@ -39,9 +41,9 @@ def test_cli_stats():
 
     # Validate that the mock repository contains commits with dates matching the CSV
     mock_repo = git.Repo(MOCK_REPO_PATH_STATS)
-    unique_commit_dates = set(
-        [commit.committed_datetime.strftime("%Y-%m-%d") for commit in mock_repo.iter_commits()]
-    )
+    unique_commit_dates = {
+        commit.committed_datetime.strftime("%Y-%m-%d") for commit in mock_repo.iter_commits()
+    }
     assert sorted(unique_commit_dates) == sorted(
         unique_csv_dates
     ), f"Commit dates do not match. Expected: {sorted(unique_csv_dates)}, Got: {sorted(unique_commit_dates)}"

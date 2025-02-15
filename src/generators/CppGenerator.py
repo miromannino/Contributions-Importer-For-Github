@@ -1,4 +1,4 @@
-from . import Generator
+from .Generator import Generator
 
 
 class CppGenerator(Generator):

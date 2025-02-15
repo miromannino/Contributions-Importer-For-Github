@@ -1,5 +1,6 @@
-from . import Generator
 import random
+
+from .Generator import Generator
 
 
 class JsonGenerator(Generator):

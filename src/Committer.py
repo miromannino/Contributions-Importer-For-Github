@@ -1,10 +1,12 @@
 #!/usr/bin/python3
 
-from typing import Optional
-import git
-import time
 import os
 import shutil
+import time
+from typing import Optional
+
+import git
+
 from .commons import Author
 
 
@@ -39,7 +41,7 @@ class Committer:
                     last_commit_date = c.committed_date
         return last_commit_date
 
-    def commit(self, date: int, message: str, author: Optional[Author] = None):
+    def commit(self, date: int, message: str, author: Author | None = None):
         """performs the commit. date is in seconds from epoch"""
         self._check_readme()
         for file in self.content.get_files():
