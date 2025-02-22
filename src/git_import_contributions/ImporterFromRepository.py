@@ -4,9 +4,8 @@ import pathlib
 import time
 from random import random
 
-from src.commons import extract_name_email
-
 from .Committer import Committer
+from .commons import extract_name_email
 from .Content import Content
 from .generators import apply_generator
 from .Stats import Stats
