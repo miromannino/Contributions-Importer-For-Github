@@ -4,8 +4,8 @@ import sys
 
 import git
 
-from src.ImporterFromRepository import ImporterFromRepository
-from src.ImporterFromStats import ImporterFromStats
+from .ImporterFromRepository import ImporterFromRepository
+from .ImporterFromStats import ImporterFromStats
 
 
 def handle_stats_action(args):
@@ -119,5 +119,4 @@ def main():
 
 
 if __name__ == "__main__":
-    print(sys.argv)
     main()
