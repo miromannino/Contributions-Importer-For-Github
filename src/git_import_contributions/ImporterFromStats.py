@@ -5,11 +5,11 @@ import time
 
 import git
 
-from .Committer import Committer
-from .commons import extract_name_email
-from .Content import Content
-from .generators import apply_generator
-from .Stats import Stats
+from git_import_contributions.Committer import Committer
+from git_import_contributions.commons import extract_name_email
+from git_import_contributions.Content import Content
+from git_import_contributions.generators import apply_generator
+from git_import_contributions.Stats import Stats
 
 DEFAULT_TIME_RANGE = (9, 18)
 DEFAULT_MAX_COMMITS_PER_DAY = 10

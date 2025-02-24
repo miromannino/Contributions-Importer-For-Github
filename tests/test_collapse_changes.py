@@ -4,7 +4,7 @@ import shutil
 import git
 import pytest
 
-from src.ImporterFromRepository import ImporterFromRepository
+from git_import_contributions.ImporterFromRepository import ImporterFromRepository
 
 from .tests_commons import MOCK_REPO_PATH, REPOS_PATHS
 

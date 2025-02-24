@@ -30,12 +30,14 @@ with open("README.md", encoding="utf-8") as fh:
 setup(
     name="git-import-contributions",
     version=version,
-    packages=find_packages(),
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
     include_package_data=True,
     install_requires=["gitpython"],
+    python_requires=">=3.10",
     entry_points={
         "console_scripts": [
-            "git-import-contributions=src.cli:main",
+            "git-import-contributions=git_import_contributions.cli:main",
         ],
     },
     author="Miro Mannino",

@@ -2,7 +2,7 @@ import sys
 
 import git
 
-from src import *
+from git_import_contributions.ImporterFromRepository import ImporterFromRepository
 
 repos_path = [
     "/path/to/Project1",

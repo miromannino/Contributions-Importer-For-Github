@@ -3,7 +3,6 @@ import os
 import subprocess
 
 import git
-import pytest
 
 from .tests_commons import MOCK_REPO_PATH
 
@@ -13,7 +12,7 @@ MOCK_REPO_PATH_STATS = f"{MOCK_REPO_PATH}_stats"
 def test_cli_stats():
     cli_command = [
         "python",
-        "src/cli.py",
+        "src/git_import_contributions/cli.py",
         "stats",
         "--csv",
         "tests/stats_1.csv",
