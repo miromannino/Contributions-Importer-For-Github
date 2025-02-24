@@ -2,8 +2,8 @@ import shutil
 import sys
 
 import git
-import pytest
 
+from git_import_contributions.ImporterFromRepository import ImporterFromRepository
 from src import *
 
 from .tests_commons import MOCK_REPO_PATH, REPOS_PATHS, import_commits

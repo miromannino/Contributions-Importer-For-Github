@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 
 import pathlib
+import random
 import time
-from random import random
 
-from .Committer import Committer
-from .commons import extract_name_email
-from .Content import Content
-from .generators import apply_generator
-from .Stats import Stats
+from git_import_contributions.Committer import Committer
+from git_import_contributions.commons import extract_name_email
+from git_import_contributions.Content import Content
+from git_import_contributions.generators import apply_generator
+from git_import_contributions.Stats import Stats
 
 
 class ImporterFromRepository:
@@ -104,7 +104,7 @@ class ImporterFromRepository:
 
             committed_date = c.committed_date
             if self.commit_time_max_past > 0:
-                committed_date -= int(random() * self.commit_time_max_past)
+                committed_date -= int(random.random() * self.commit_time_max_past)
                 print(
                     "    Commit date changed to: "
                     + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(c.committed_date))
@@ -127,14 +127,17 @@ class ImporterFromRepository:
                     max_past = self.changes_commits_max_time_backward
                     if last_committed_date != 0:
                         max_past = min(break_committed_date - last_committed_date, max_past)
-                    break_committed_date -= int(random() * (max_past / 3) + (max_past / 3 * 2))
+                    break_committed_date -= int(
+                        random.random() * (max_past / 3) + (max_past / 3 * 2)
+                    )
                 if time.strftime("%Y-%m-%d", time.localtime(last_committed_date)) == time.strftime(
                     "%Y-%m-%d", time.localtime(break_committed_date)
                 ):
                     commits_for_last_day += 1
                     if (
                         commits_for_last_day
-                        > random() * (self.max_commits_per_day[1] - self.max_commits_per_day[0])
+                        > random.random()
+                        * (self.max_commits_per_day[1] - self.max_commits_per_day[0])
                         + self.max_commits_per_day[0]
                     ):
                         print(

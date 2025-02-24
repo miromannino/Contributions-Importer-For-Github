@@ -4,8 +4,8 @@ import sys
 
 import git
 
-from .ImporterFromRepository import ImporterFromRepository
-from .ImporterFromStats import ImporterFromStats
+from git_import_contributions.ImporterFromRepository import ImporterFromRepository
+from git_import_contributions.ImporterFromStats import ImporterFromStats
 
 
 def handle_stats_action(args):
