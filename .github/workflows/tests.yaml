@@ -38,5 +38,5 @@ jobs:
 
       - name: Run tests
         run: |
-          export PYTHONPATH=".:$PYTHONPATH"
+          export PYTHONPATH="src:$PYTHONPATH"
           pipenv run pytest

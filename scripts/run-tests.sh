@@ -1,2 +1,2 @@
-export PYTHONPATH=".:$PYTHONPATH"
+export PYTHONPATH="src:$PYTHONPATH"
 pipenv run pytest

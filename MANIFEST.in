@@ -1,0 +1,2 @@
+# Include the README.md needed as README to describe the mock repo content
+recursive-include src/git_import_contributions README.md
