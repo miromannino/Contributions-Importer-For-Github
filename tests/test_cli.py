@@ -2,7 +2,6 @@ import os
 import subprocess
 
 import git
-import pytest
 
 from .tests_commons import MOCK_REPO_PATH, REPOS_PATHS
 
@@ -10,7 +9,7 @@ from .tests_commons import MOCK_REPO_PATH, REPOS_PATHS
 def test_cli_collapse_changes():
     cli_command_collapsed = [
         "python",
-        "src/cli.py",
+        "src/git_import_contributions/cli.py",
         "repo",
         "--repos",
         *REPOS_PATHS,
@@ -24,7 +23,7 @@ def test_cli_collapse_changes():
 
     cli_command_non_collapsed = [
         "python",
-        "src/cli.py",
+        "src/git_import_contributions/cli.py",
         "repo",
         "--repos",
         *REPOS_PATHS,
@@ -66,7 +65,7 @@ def test_cli_collapse_changes():
 def test_cli_filter_by_author():
     cli_command = [
         "python",
-        "src/cli.py",
+        "src/git_import_contributions/cli.py",
         "repo",
         "--repos",
         *REPOS_PATHS,

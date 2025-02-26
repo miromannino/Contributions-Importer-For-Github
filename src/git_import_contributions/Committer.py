@@ -7,7 +7,7 @@ from typing import Optional
 
 import git
 
-from .commons import Author
+from git_import_contributions.commons import Author
 
 
 class Committer:
