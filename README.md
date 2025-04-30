@@ -150,6 +150,10 @@ git-import-contributions repo \
     --max-commits-per-day 5 10 \
     --ignore-before-date 2020-01-01
 ```
+> [!NOTE]
+> The *author* field should contain the full author information, not just the email.  
+> Use the complete format, for example: `Author: Quijote <don.quijote@la-mancha.es>`.  
+> Make sure to enter `Quijote <don.quijote@la-mancha.es>`—including both name and email into the `<email>` field.
 
 ### Advanced Features
 
