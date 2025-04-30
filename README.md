@@ -153,7 +153,7 @@ git-import-contributions repo \
 > [!NOTE]
 > The *author* field should contain the full author information, not just the email.  
 > Use the complete format, for example: `Author: Quijote <don.quijote@la-mancha.es>`.  
-> Make sure to enter `Quijote <don.quijote@la-mancha.es>`—including both name and email into the `<email>` field.
+> Make sure to enter `Quijote <don.quijote@la-mancha.es>`—including both name and email into the `<author>` field.
 
 ### Advanced Features
 
