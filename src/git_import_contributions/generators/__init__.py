@@ -1,6 +1,7 @@
 from .BashGenerator import BashGenerator
 from .CGenerator import CGenerator
 from .CppGenerator import CppGenerator
+from .CsharpGenerator import CsharpGenerator
 from .CssGenerator import CssGenerator
 from .DartGenerator import DartGenerator
 from .Generator import Generator
@@ -18,6 +19,7 @@ from .SqlGenerator import SqlGenerator
 from .SwiftGenerator import SwiftGenerator
 from .TerraformGenerator import TerraformGenerator
 from .TsGenerator import TsGenerator
+from .XamlGenerator import XamlGenerator
 
 available_generators = {
     ".md": Generator,
@@ -29,6 +31,7 @@ available_generators = {
     ".scss": CssGenerator,
     ".cpp": CppGenerator,
     ".c": CGenerator,
+    ".cs": CsharpGenerator,
     ".dart": DartGenerator,
     ".py": PyGenerator,
     ".json": JsonGenerator,
@@ -44,6 +47,7 @@ available_generators = {
     ".tsx": TsGenerator,
     ".rb": RubyGenerator,
     ".tf": TerraformGenerator,
+    ".xaml": XamlGenerator,
 }
 
 
