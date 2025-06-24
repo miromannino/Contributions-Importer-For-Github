@@ -2,6 +2,7 @@ from .BashGenerator import BashGenerator
 from .CGenerator import CGenerator
 from .CppGenerator import CppGenerator
 from .CssGenerator import CssGenerator
+from .DartGenerator import DartGenerator
 from .Generator import Generator
 from .HtmlGenerator import HtmlGenerator
 from .JavaGenerator import JavaGenerator
@@ -28,6 +29,7 @@ available_generators = {
     ".scss": CssGenerator,
     ".cpp": CppGenerator,
     ".c": CGenerator,
+    ".dart": DartGenerator,
     ".py": PyGenerator,
     ".json": JsonGenerator,
     ".kt": KotlinGenerator,
