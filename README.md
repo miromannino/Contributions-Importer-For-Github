@@ -5,7 +5,7 @@
 This tool helps users to import contributions to GitHub from private git repositories, or from public repositories that are not hosted in GitHub.
 
 <p style="margin: 20px" align="center">
-<img src="https://github.com/miromannino/contributions-importer-for-github/blob/resources/fig1.png?raw=true" />
+<img src="https://github.com/miromannino/contributions-importer-for-github/blob/resources/fig1.webp?raw=true" />
 </p>
 
 ## How it Works
